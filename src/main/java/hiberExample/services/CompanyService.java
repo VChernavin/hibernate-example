@@ -36,8 +36,6 @@ public class CompanyService {
     }
 
     public void delete(Long id) {
-
         companyDao.delete(id);
-
     }
 }

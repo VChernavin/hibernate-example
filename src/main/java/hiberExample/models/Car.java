@@ -16,7 +16,7 @@ public class Car {
 	private long id;
 	@Column(nullable = false)
 	private String registrationNumber;
-	@ManyToOne()
+	@ManyToOne
 	@JoinColumn(name = "company_id",nullable = false,foreignKey = @ForeignKey(name = "company_id"))
 	private Company company;
 
