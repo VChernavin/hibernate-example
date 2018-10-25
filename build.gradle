@@ -8,6 +8,7 @@ buildscript {
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.5.RELEASE")
         classpath "gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.20.1"
+        classpath "io.franzbecker:gradle-lombok:1.14"
     }
 }
 
@@ -19,6 +20,7 @@ plugins {
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: "com.palantir.docker-run"
+apply plugin: "io.franzbecker.gradle-lombok"
 
 group 'HiberExample'
 version '1.0-SNAPSHOT'
@@ -32,6 +34,8 @@ repositories {
 }
 
 dependencies {
+
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
 //    compile group: 'org.springframework', name: 'spring-dao', version: '2.0.3'
 //    compile group: 'org.springframework', name: 'spring-jdbc', version: '2.0.6'
 //    compile group: 'org.springframework', name: 'spring-orm', version: '3.0.6.RELEASE'
