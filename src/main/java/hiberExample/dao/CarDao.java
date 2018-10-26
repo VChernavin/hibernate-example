@@ -9,7 +9,6 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 import hiberExample.models.Car;
-import hiberExample.models.Company;
 
 @Repository
 @Transactional

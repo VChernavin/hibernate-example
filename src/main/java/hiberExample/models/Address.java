@@ -4,17 +4,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 @Entity(name = "Address")
-@Setter
-@Getter
+@Data
 public class Address {
-    @Id
-    @GeneratedValue
-    private long id;
-    private String houseNumber;
-    private String street;
-    private String zipCode;
+	@Id
+	@GeneratedValue
+	private long id;
+	private String houseNumber;
+	private String street;
+	private String zipCode;
 }

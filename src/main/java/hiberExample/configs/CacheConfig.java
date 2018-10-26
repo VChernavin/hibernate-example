@@ -7,37 +7,34 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 
-
-
-
 @EnableCaching
 @Configuration
 public class CacheConfig {
 
-    @Bean
-    public EhCacheManagerFactoryBean ehCacheManagerFactory() {
+	@Bean
+	public EhCacheManagerFactoryBean ehCacheManagerFactory() {
 
-        EhCacheManagerFactoryBean cacheManagerFactoryBean = new EhCacheManagerFactoryBean();
+		EhCacheManagerFactoryBean cacheManagerFactoryBean = new EhCacheManagerFactoryBean();
 
-        cacheManagerFactoryBean.setConfigLocation(new ClassPathResource("ehcache.xml"));
+		cacheManagerFactoryBean.setConfigLocation(new ClassPathResource("ehcache.xml"));
 
-        cacheManagerFactoryBean.setShared(true);
+		cacheManagerFactoryBean.setShared(true);
 
-        return cacheManagerFactoryBean;
+		return cacheManagerFactoryBean;
 
-    }
+	}
 
-    @Bean
-    public EhCacheCacheManager ehCacheCacheManager() {
+	@Bean
+	public EhCacheCacheManager ehCacheCacheManager() {
 
-        EhCacheCacheManager cacheManager = new EhCacheCacheManager(ehCacheManagerFactory().getObject());
+		EhCacheCacheManager cacheManager = new EhCacheCacheManager(ehCacheManagerFactory().getObject());
 
-//        cacheManager.setCacheManager(ehCacheManagerFactory().getObject());
+		//        cacheManager.setCacheManager(ehCacheManagerFactory().getObject());
 
-        cacheManager.setTransactionAware(true);
+		cacheManager.setTransactionAware(true);
 
-        return cacheManager;
+		return cacheManager;
 
-    }
+	}
 
 }

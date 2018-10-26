@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import hiberExample.dao.CarDao;
 import hiberExample.models.Car;
-import hiberExample.models.Company;
 
 public class CarService {
 
@@ -36,6 +35,5 @@ public class CarService {
 	public void delete(Long id) {
 		carDao.delete(id);
 	}
-
 
 }

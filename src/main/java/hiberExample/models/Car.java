@@ -8,20 +8,18 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Entity (name = "Car")
-@Setter
-@Getter
+@Entity(name = "Car")
+@Data
 public class Car {
 
 	@Id
 	@GeneratedValue
 	private long id;
-	@Column(nullable = false)
+	@Column(nullable = false, name = "sdf")
 	private String registrationNumber;
 	@ManyToOne
-	@JoinColumn(name = "company_id",nullable = false,foreignKey = @ForeignKey(name = "company_id"))
+	@JoinColumn(name = "company_id", nullable = false, foreignKey = @ForeignKey(name = "company_id"))
 	private Company company;
 }

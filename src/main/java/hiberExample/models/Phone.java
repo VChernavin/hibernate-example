@@ -7,12 +7,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Entity
-@Setter
-@Getter
+@Entity(name = "Phone")
+@Data
 public class Phone {
 	@Id
 	@GeneratedValue

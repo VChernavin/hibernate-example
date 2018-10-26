@@ -4,14 +4,18 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
+
+import org.springframework.stereotype.Repository;
 
 import hiberExample.models.PhoneDetails;
 
+@Repository
+@Transactional
 public class PhoneDetailsDao {
 
 	@PersistenceContext
 	private EntityManager entityManager;
-
 
 	public PhoneDetails getById(long id) {
 		return entityManager.find(PhoneDetails.class, id);
@@ -28,7 +32,6 @@ public class PhoneDetailsDao {
 		return (PhoneDetails) entityManager.createQuery("from PhoneDetails where technology = :technology ")
 				.setParameter("technology", technology).getSingleResult();
 	}
-
 
 	public List<PhoneDetails> getAll() {
 

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import hiberExample.models.Car;
-import hiberExample.models.Company;
 import hiberExample.services.CarService;
 
 @RestController
@@ -31,7 +30,7 @@ public class CarController {
 		return carService.getAll();
 	}
 
-	@RequestMapping(value = "/filterByCompany" ,method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/filterByCompany", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.OK)
 	public @ResponseBody
 	List<Car> getByCompany(String name) {

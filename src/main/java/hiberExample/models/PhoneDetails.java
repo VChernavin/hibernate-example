@@ -4,19 +4,21 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-import lombok.Getter;
-import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
-@Entity
-@Setter
-@Getter
+import lombok.Data;
+
+@Entity(name = "PhoneDetails")
+@Data
 public class PhoneDetails {
 	@Id
 	@GeneratedValue
 	private Long id;
 
+	@ColumnDefault("'N/A'")
 	private String provider;
 
+	@ColumnDefault("'N/A'")
 	private String technology;
 
 }

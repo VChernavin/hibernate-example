@@ -4,14 +4,18 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
+
+import org.springframework.stereotype.Repository;
 
 import hiberExample.models.Phone;
 
+@Repository
+@Transactional
 public class PhoneDao {
 
 	@PersistenceContext
 	private EntityManager entityManager;
-
 
 	public Phone getById(long id) {
 		return entityManager.find(Phone.class, id);

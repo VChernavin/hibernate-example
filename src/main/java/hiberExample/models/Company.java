@@ -6,18 +6,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 @Entity(name = "Company")
-@Setter
-@Getter
+@Data
 public class Company {
 
-
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private long id;
-    @Column(nullable = false)
-    private String name;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
+	@Column(nullable = false)
+	private String name;
 }

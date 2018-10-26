@@ -8,20 +8,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 @Entity(name = "Department")
-@Setter
-@Getter
+@Data
 public class Department {
-    @Id
-    @GeneratedValue
-    private long id;
-    @Column(nullable = false)
-    private String name;
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<Company> companyes;
+	@Id
+	@GeneratedValue
+	private long id;
+	@Column(nullable = false)
+	private String name;
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	private List<Company> companyes;
 }
