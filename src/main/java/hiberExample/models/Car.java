@@ -17,7 +17,7 @@ public class Car {
 	@Id
 	@GeneratedValue
 	private long id;
-	@Column(nullable = false, name = "sdf")
+	@Column(nullable = false,unique = true)
 	private String registrationNumber;
 	@ManyToOne
 	@JoinColumn(name = "company_id", nullable = false, foreignKey = @ForeignKey(name = "company_id"))

@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 
 import hiberExample.services.CarService;
 import hiberExample.services.CompanyService;
+import hiberExample.services.DepartmentService;
 
 @Configuration
 public class AppConfig {
@@ -14,8 +15,13 @@ public class AppConfig {
 		return new CompanyService();
 	}
 
-	@Bean
-	public CarService carService() {
-		return new CarService();
-	}
+    @Bean
+    public CarService carService() {
+        return new CarService();
+    }
+
+    @Bean
+    public DepartmentService departmentService() {
+        return new DepartmentService();
+    }
 }

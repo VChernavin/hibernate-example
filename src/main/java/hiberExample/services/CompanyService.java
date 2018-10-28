@@ -22,7 +22,7 @@ public class CompanyService {
 		return companyDao.getById(id);
 	}
 
-	@Cacheable(value = "company.byName", key = "#id", unless = "#result != null and #result.name.toUpperCase().startsWith('TEST')")
+	@Cacheable(value = "company.byName", key = "#name", unless = "#result != null and #result.name.toUpperCase().startsWith('TEST')")
 	public Company get(String name) {
 		return companyDao.getByName(name);
 	}
