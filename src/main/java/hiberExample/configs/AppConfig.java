@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Configuration;
 import hiberExample.services.CarService;
 import hiberExample.services.CompanyService;
 import hiberExample.services.DepartmentService;
+import hiberExample.services.EmployeeService;
+import hiberExample.services.PhoneDetailsService;
 
 @Configuration
 public class AppConfig {
@@ -24,4 +26,14 @@ public class AppConfig {
     public DepartmentService departmentService() {
         return new DepartmentService();
     }
+
+	@Bean
+	public EmployeeService employeeService() {
+		return new EmployeeService();
+	}
+
+	@Bean
+	public PhoneDetailsService phoneDetailsService() {
+		return new PhoneDetailsService();
+	}
 }

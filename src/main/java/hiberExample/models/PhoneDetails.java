@@ -1,6 +1,9 @@
 package hiberExample.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
@@ -15,10 +18,10 @@ public class PhoneDetails {
 	@GeneratedValue
 	private Long id;
 
-	@ColumnDefault("'N/A'")
-	private String provider;
+	private String provider = "N/A";
 
-	@ColumnDefault("'N/A'")
-	private String technology;
+	@Enumerated(EnumType.STRING)
+	private PhoneTechnology technology = PhoneTechnology.NA;
+
 
 }
