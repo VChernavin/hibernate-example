@@ -8,6 +8,7 @@ import hiberExample.services.CompanyService;
 import hiberExample.services.DepartmentService;
 import hiberExample.services.EmployeeService;
 import hiberExample.services.PhoneDetailsService;
+import hiberExample.services.PhoneService;
 
 @Configuration
 public class AppConfig {
@@ -35,5 +36,10 @@ public class AppConfig {
 	@Bean
 	public PhoneDetailsService phoneDetailsService() {
 		return new PhoneDetailsService();
+	}
+
+	@Bean
+	public PhoneService phoneService() {
+		return new PhoneService();
 	}
 }

@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import lombok.Data;
@@ -16,14 +17,11 @@ public class Phone {
 	@GeneratedValue
 	private Long id;
 
-	@Column(name = "`number`")
+	@Column(name = "`number`",unique = true)
 	private String number;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "details_id")
 	private PhoneDetails details;
 
-	public Phone(Long id) {
-		this.id = id;
-	}
 }

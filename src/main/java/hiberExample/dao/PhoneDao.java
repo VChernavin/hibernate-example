@@ -36,8 +36,8 @@ public class PhoneDao {
 		entityManager.persist(Phone);
 	}
 
-	public void update(Phone Phone) {
-		entityManager.merge(Phone);
+	public Phone update(Phone Phone) {
+		return entityManager.merge(Phone);
 	}
 
 	public void delete(long id) {
