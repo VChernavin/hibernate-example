@@ -4,13 +4,15 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
 
 import hiberExample.dao.PhoneDetailsDao;
 import hiberExample.models.PhoneDetails;
 
+@Service
 public class PhoneDetailsService {
 	@Autowired
-	PhoneDetailsDao phoneDetailsDao;
+	private PhoneDetailsDao phoneDetailsDao;
 
 	public List<PhoneDetails> getAll() {
 		return phoneDetailsDao.getAll();

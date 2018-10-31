@@ -1,16 +1,20 @@
 package hiberExample.services;
 
-import hiberExample.dao.DepartmentDao;
-import hiberExample.models.Department;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
-
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+
+import hiberExample.dao.DepartmentDao;
+import hiberExample.models.Department;
+
+
+@Service
 public class DepartmentService {
 
     @Autowired
-    DepartmentDao departmentDao;
+    private DepartmentDao departmentDao;
 
 
     public List<Department> getAll() {

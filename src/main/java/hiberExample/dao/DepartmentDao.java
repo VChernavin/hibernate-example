@@ -1,12 +1,14 @@
 package hiberExample.dao;
 
-import hiberExample.models.Department;
-import org.springframework.stereotype.Repository;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import java.util.List;
+
+import org.springframework.stereotype.Repository;
+
+import hiberExample.models.Department;
 
 @Repository
 @Transactional

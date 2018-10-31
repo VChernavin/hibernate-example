@@ -4,14 +4,16 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
 
 import hiberExample.dao.EmployeeDao;
 import hiberExample.models.Employee;
 
+@Service
 public class EmployeeService {
 
 	@Autowired
-	EmployeeDao employeeDao;
+	private EmployeeDao employeeDao;
 
 	public List<Employee> getAll() {
 		return employeeDao.getAll();

@@ -3,7 +3,6 @@ package hiberExample.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import hiberExample.models.Employee;
@@ -27,40 +25,40 @@ public class EmployeeController {
 	private EmployeeService employeeService;
 
 	@GetMapping
-	@ResponseStatus(value = HttpStatus.OK)
+
 	public @ResponseBody
 	List<Employee> getAll() {
 		return employeeService.getAll();
 	}
 
 	@GetMapping(value = "/{id}")
-	@ResponseStatus(value = HttpStatus.OK)
+
 	public @ResponseBody
 	Employee get(@PathVariable Long id) {
 		return employeeService.get(id);
 	}
 
 	@GetMapping(value = "/filter")
-	@ResponseStatus(value = HttpStatus.OK)
+
 	public @ResponseBody
 	Employee get(@RequestParam String name) {
 		return employeeService.get(name);
 	}
 
 	@PostMapping
-	@ResponseStatus(value = HttpStatus.OK)
+
 	public void create(@RequestBody Employee employee) {
 		employeeService.create(employee);
 	}
 
 	@PutMapping
-	@ResponseStatus(value = HttpStatus.OK)
+
 	public void update(@RequestBody Employee employee) {
 		employeeService.update(employee);
 	}
 
 	@DeleteMapping(value = "/{id}")
-	@ResponseStatus(value = HttpStatus.OK)
+
 	public void delete(@PathVariable Long id) {
 		employeeService.delete(id);
 	}

@@ -3,14 +3,16 @@ package hiberExample.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import hiberExample.dao.CarDao;
 import hiberExample.models.Car;
 
+@Service
 public class CarService {
 
 	@Autowired
-	CarDao carDao;
+	private CarDao carDao;
 
 	public List<Car> getAll() {
 		return carDao.getAll();
