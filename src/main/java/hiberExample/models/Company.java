@@ -1,5 +1,7 @@
 package hiberExample.models;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +12,7 @@ import lombok.Data;
 
 @Entity(name = "Company")
 @Data
-public class Company {
+public class Company implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

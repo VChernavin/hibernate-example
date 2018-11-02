@@ -18,7 +18,7 @@ public class Car {
 	@Id
 	@GeneratedValue
 	private long id;
-	@Column(nullable = false,unique = true)
+	@Column(nullable = false, unique = true)
 	private String registrationNumber;
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "company_id", nullable = false, foreignKey = @ForeignKey(name = "company_id"))

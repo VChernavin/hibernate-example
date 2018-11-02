@@ -25,8 +25,7 @@ public class Employee {
 	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private List<Phone> phones;
 
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	private List<Address> addresses;
+
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "department_id")
