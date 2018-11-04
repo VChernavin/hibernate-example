@@ -15,9 +15,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class CacheMBean {
 
-	private static final String COMPANY_BY_ID = "company.byId";
-	private static final String COMPANY_BY_NAME = "company.byName";
-
 	private final EhCacheCacheManager ehCacheCacheManager;
 
 	@Autowired
@@ -25,28 +22,13 @@ public class CacheMBean {
 		this.ehCacheCacheManager = ehCacheCacheManager;
 	}
 
-	@ManagedOperation
-	public void clearCompanyByIdCache() {
-		clearCache(COMPANY_BY_ID);
-	}
-
-	@ManagedOperation
-	public void clearCompanyByNameCache() {
-		clearCache(COMPANY_BY_NAME);
+	@ManagedAttribute
+	public String[] getCacheList() {
+		return Objects.requireNonNull(ehCacheCacheManager.getCacheManager()).getCacheNames();
 	}
 
 	@ManagedAttribute
-	public String getCompanyByIdCache() {
-		return getCompanyCache(COMPANY_BY_ID);
-
-	}
-
-	@ManagedAttribute
-	public String getCompanyByNameCache() {
-		return getCompanyCache(COMPANY_BY_NAME);
-	}
-
-	private String getCompanyCache(String cacheName) {
+	public String getCompanyCache(String cacheName) {
 		List keys = Objects.requireNonNull(ehCacheCacheManager.getCacheManager()).getEhcache(cacheName).getKeys();
 		return ehCacheCacheManager.getCacheManager().getEhcache(cacheName).getAll(keys).entrySet()
 				.stream()
@@ -54,7 +36,8 @@ public class CacheMBean {
 				.collect(Collectors.joining(", "));
 	}
 
-	private void clearCache(String cacheName) {
+	@ManagedOperation
+	public void clearCache(String cacheName) {
 		Objects.requireNonNull(ehCacheCacheManager.getCache(cacheName)).clear();
 	}
 }

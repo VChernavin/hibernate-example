@@ -28,7 +28,7 @@ public class PhoneDetailsService {
 		return phoneDetailsDao.getByProvider(provider);
 	}
 
-	@Cacheable(value = "phoneDetails.byProvider", key = "#technology", unless = "#result != null and #result.provider.toUpperCase().startsWith('TEST')")
+	@Cacheable(value = "phoneDetails.byTechnology", key = "#technology", unless = "#result != null and #result.provider.toUpperCase().startsWith('TEST')")
 	public PhoneDetails getByTechnology(String technology) {
 		return phoneDetailsDao.getByTechnology(technology);
 	}

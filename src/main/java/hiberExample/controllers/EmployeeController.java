@@ -38,11 +38,16 @@ public class EmployeeController {
 		return employeeService.get(id);
 	}
 
-	@GetMapping(value = "/filter")
-
+	@GetMapping(value = "/filter/name")
 	public @ResponseBody
 	Employee get(@RequestParam String name) {
 		return employeeService.get(name);
+	}
+
+	@GetMapping(value = "/filter/surname")
+	public @ResponseBody
+	Employee getBySurname(@RequestParam String surname) {
+		return employeeService.getBySurname(surname);
 	}
 
 	@PostMapping

@@ -29,6 +29,11 @@ public class EmployeeService {
 		return employeeDao.getByName(name);
 	}
 
+	@Cacheable(value = "employee.bySurame", key = "#surname", unless = "#result != null and #result.name.toUpperCase().startsWith('TEST')")
+	public Employee getBySurname(String surname) {
+		return employeeDao.getBySurname(surname);
+	}
+
 	public void create(Employee employee) {
 		employeeDao.create(employee);
 	}
