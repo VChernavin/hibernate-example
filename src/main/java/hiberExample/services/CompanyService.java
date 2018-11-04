@@ -1,43 +1,20 @@
 package hiberExample.services;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Service;
-
-import hiberExample.dao.CompanyDao;
 import hiberExample.models.Company;
 
-@Service
-public class CompanyService {
+import java.util.List;
 
-	@Autowired
-	private CompanyDao companyDao;
+public interface CompanyService {
 
-	public List<Company> getAll() {
-		return companyDao.getAll();
-	}
+    List<Company> getAll();
 
-	@Cacheable(value = "company.byId", key = "#id", unless = "#result != null and #result.name.toUpperCase().startsWith('TEST')")
-	public Company get(Long id) {
-		return companyDao.getById(id);
-	}
+    Company get(Long id);
 
-	@Cacheable(value = "company.byName", key = "#name", unless = "#result != null and #result.name.toUpperCase().startsWith('TEST')")
-	public Company get(String name) {
-		return companyDao.getByName(name);
-	}
+    Company get(String name);
 
-	public void create(Company company) {
-		companyDao.create(company);
-	}
+    void create(Company company);
 
-	public void update(Company company) {
-		companyDao.update(company);
-	}
+    void update(Company company);
 
-	public void delete(Long id) {
-		companyDao.delete(id);
-	}
+    void delete(Long id);
 }

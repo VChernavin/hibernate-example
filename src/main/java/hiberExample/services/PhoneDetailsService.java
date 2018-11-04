@@ -1,47 +1,22 @@
 package hiberExample.services;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Service;
-
-import hiberExample.dao.PhoneDetailsDao;
 import hiberExample.models.PhoneDetails;
 
-@Service
-public class PhoneDetailsService {
-	@Autowired
-	private PhoneDetailsDao phoneDetailsDao;
+import java.util.List;
 
-	public List<PhoneDetails> getAll() {
-		return phoneDetailsDao.getAll();
-	}
+public interface PhoneDetailsService {
 
-	@Cacheable(value = "phoneDetails.byId", key = "#id", unless = "#result != null and #result.provider.toUpperCase().startsWith('TEST')")
-	public PhoneDetails get(Long id) {
-		return phoneDetailsDao.getById(id);
-	}
+	List<PhoneDetails> getAll();
 
-	@Cacheable(value = "phoneDetails.byProvider", key = "#provider", unless = "#result != null and #result.provider.toUpperCase().startsWith('TEST')")
-	public PhoneDetails getByProvider(String provider) {
-		return phoneDetailsDao.getByProvider(provider);
-	}
+	PhoneDetails get(Long id);
 
-	@Cacheable(value = "phoneDetails.byTechnology", key = "#technology", unless = "#result != null and #result.provider.toUpperCase().startsWith('TEST')")
-	public PhoneDetails getByTechnology(String technology) {
-		return phoneDetailsDao.getByTechnology(technology);
-	}
+	PhoneDetails getByProvider(String provider);
 
-	public void create(PhoneDetails phoneDetails) {
-		phoneDetailsDao.create(phoneDetails);
-	}
+	PhoneDetails getByTechnology(String technology);
 
-	public PhoneDetails update(PhoneDetails phoneDetails) {
-		return phoneDetailsDao.update(phoneDetails);
-	}
+	void create(PhoneDetails phoneDetails);
 
-	public void delete(Long id) {
-		phoneDetailsDao.delete(id);
-	}
+	PhoneDetails update(PhoneDetails phoneDetails);
+
+	void delete(Long id);
 }

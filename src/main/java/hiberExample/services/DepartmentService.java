@@ -1,45 +1,20 @@
 package hiberExample.services;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Service;
-
-import hiberExample.dao.DepartmentDao;
 import hiberExample.models.Department;
 
+import java.util.List;
 
-@Service
-public class DepartmentService {
+public interface DepartmentService {
 
-    @Autowired
-    private DepartmentDao departmentDao;
+    List<Department> getAll();
 
+    Department get(Long id);
 
-    public List<Department> getAll() {
-        return departmentDao.getAll();
-    }
+    Department get(String name);
 
-    @Cacheable(value = "department.byId", key = "#id", unless = "#result != null and #result.name.toUpperCase().startsWith('TEST')")
-    public Department get(Long id) {
-        return departmentDao.getById(id);
-    }
+    void create(Department company);
 
-    @Cacheable(value = "department.byName", key = "#name", unless = "#result != null and #result.name.toUpperCase().startsWith('TEST')")
-    public Department get(String name) {
-        return departmentDao.getByName(name);
-    }
+    void update(Department company);
 
-    public void create(Department company) {
-        departmentDao.create(company);
-    }
-
-    public void update(Department company) {
-        departmentDao.update(company);
-    }
-
-    public void delete(Long id) {
-        departmentDao.delete(id);
-    }
+    void delete(Long id);
 }

@@ -1,44 +1,20 @@
 package hiberExample.services;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Service;
-
-import hiberExample.dao.PhoneDao;
 import hiberExample.models.Phone;
 
-@Service
-public class PhoneService {
+import java.util.List;
 
-	@Autowired
-	private PhoneDao phoneDao;
+public interface PhoneService {
+    List<Phone> getAll();
 
-	public List<Phone> getAll() {
-		return phoneDao.getAll();
-	}
+    Phone get(Long id);
 
-	@Cacheable(value = "phone.byId", key = "#id", unless = "#result != null and #result.details.provider.toUpperCase().startsWith('TEST')")
-	public Phone get(Long id) {
-		return phoneDao.getById(id);
-	}
-
-	@Cacheable(value = "phone.byProvider", key = "#number", unless = "#result != null and #result.details.provider.toUpperCase().startsWith('TEST')")
-	public Phone getByNumber(String number) {
-		return phoneDao.getByNumber(number);
-	}
+    Phone getByNumber(String number);
 
 
-	public void create(Phone phone) {
-		phoneDao.create(phone);
-	}
+    void create(Phone phone);
 
-	public Phone update(Phone phone) {
-		return phoneDao.update(phone);
-	}
+    Phone update(Phone phone);
 
-	public void delete(Long id) {
-		phoneDao.delete(id);
-	}
+    void delete(Long id);
 }
