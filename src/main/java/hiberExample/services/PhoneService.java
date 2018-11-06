@@ -1,20 +1,19 @@
 package hiberExample.services;
 
-import hiberExample.models.Phone;
-
 import java.util.List;
 
+import hiberExample.models.Phone;
+
 public interface PhoneService {
-    List<Phone> getAll();
+	List<Phone> getAll();
 
-    Phone get(Long id);
+	Phone get(Long id);
 
-    Phone getByNumber(String number);
+	Phone getByNumber(String number);
 
+	void create(Phone phone);
 
-    void create(Phone phone);
+	Phone update(Phone phone);
 
-    Phone update(Phone phone);
-
-    void delete(Long id);
+	void delete(Long id);
 }

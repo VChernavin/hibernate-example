@@ -5,11 +5,10 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 import lombok.Data;
@@ -18,9 +17,9 @@ import lombok.Data;
 @Data
 public class EmployeeDetails implements Serializable {
 	private static final long serialVersionUID = 1090625571858785329L;
-	@Id
-	@GeneratedValue
-	private long id;
+
+	@EmbeddedId
+	private EmployeeDetailsPK pk;
 
 	private Date birthday;
 	@Enumerated(EnumType.ORDINAL)

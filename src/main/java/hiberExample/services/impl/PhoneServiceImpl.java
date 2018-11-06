@@ -2,13 +2,13 @@ package hiberExample.services.impl;
 
 import java.util.List;
 
-import hiberExample.services.PhoneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import hiberExample.dao.PhoneDao;
 import hiberExample.models.Phone;
+import hiberExample.services.PhoneService;
 
 @Service
 public class PhoneServiceImpl implements PhoneService {
@@ -25,11 +25,11 @@ public class PhoneServiceImpl implements PhoneService {
 		return phoneDao.getById(id);
 	}
 
-	@Cacheable(value = "phone.byProvider", key = "#number", unless = "#result != null and #result.details.provider.toUpperCase().startsWith('TEST')")
+	@Cacheable(value = "phone.byProvider", key = "#number", unless = "#result != null and #result.details.provider.toUpperCase().startsWith"
+			+ "('TEST')")
 	public Phone getByNumber(String number) {
 		return phoneDao.getByNumber(number);
 	}
-
 
 	public void create(Phone phone) {
 		phoneDao.create(phone);

@@ -15,7 +15,7 @@ import lombok.Data;
 @Entity(name = "PhoneDetails")
 @Data
 @Table(uniqueConstraints = {
-		@UniqueConstraint( columnNames = {"provider","technology"})})
+		@UniqueConstraint(columnNames = {"provider", "technology"})})
 public class PhoneDetails implements Serializable {
 	private static final long serialVersionUID = 6852971138593126414L;
 	@Id
@@ -26,6 +26,5 @@ public class PhoneDetails implements Serializable {
 
 	@Enumerated(EnumType.STRING)
 	private PhoneTechnology technology = PhoneTechnology.NA;
-
 
 }

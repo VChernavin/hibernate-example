@@ -2,13 +2,13 @@ package hiberExample.services.impl;
 
 import java.util.List;
 
-import hiberExample.services.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import hiberExample.dao.CompanyDao;
 import hiberExample.models.Company;
+import hiberExample.services.CompanyService;
 
 @Service
 public class CompanyServiceImpl implements CompanyService {

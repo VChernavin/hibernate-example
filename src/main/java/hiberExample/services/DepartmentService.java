@@ -1,20 +1,20 @@
 package hiberExample.services;
 
-import hiberExample.models.Department;
-
 import java.util.List;
+
+import hiberExample.models.Department;
 
 public interface DepartmentService {
 
-    List<Department> getAll();
+	List<Department> getAll();
 
-    Department get(Long id);
+	Department get(Long id);
 
-    Department get(String name);
+	Department get(String name);
 
-    void create(Department company);
+	void create(Department company);
 
-    void update(Department company);
+	void update(Department company);
 
-    void delete(Long id);
+	void delete(Long id);
 }

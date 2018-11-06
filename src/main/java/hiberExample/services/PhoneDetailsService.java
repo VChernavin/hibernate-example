@@ -1,8 +1,8 @@
 package hiberExample.services;
 
-import hiberExample.models.PhoneDetails;
-
 import java.util.List;
+
+import hiberExample.models.PhoneDetails;
 
 public interface PhoneDetailsService {
 

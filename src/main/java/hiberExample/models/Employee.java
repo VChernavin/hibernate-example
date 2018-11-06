@@ -1,7 +1,8 @@
 package hiberExample.models;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -26,9 +27,7 @@ public class Employee implements Serializable {
 	private String surname;
 
 	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	private List<Phone> phones;
-
-
+	private Set<Phone> phones = new HashSet<>();
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "department_id")
@@ -38,6 +37,6 @@ public class Employee implements Serializable {
 	@JoinColumn(name = "company_id")
 	private Company company;
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private EmployeeDetails employeeDetails;
 }

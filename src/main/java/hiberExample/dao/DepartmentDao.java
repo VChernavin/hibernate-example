@@ -14,42 +14,41 @@ import hiberExample.models.Department;
 @Transactional
 public class DepartmentDao {
 
-    @PersistenceContext
-    private EntityManager entityManager;
+	@PersistenceContext
+	private EntityManager entityManager;
 
+	public Department getById(long id) {
+		return entityManager.find(Department.class, id);
+	}
 
-    public Department getById(long id) {
-        return entityManager.find(Department.class, id);
-    }
+	public Department getByName(String name) {
 
-    public Department getByName(String name) {
+		return (Department) entityManager.createQuery("from Department where name = :name ")
+				.setParameter("name", name).getSingleResult();
+	}
 
-        return (Department) entityManager.createQuery("from Department where name = :name ")
-                .setParameter("name", name).getSingleResult();
-    }
+	public List<Department> getAll() {
 
-    public List<Department> getAll() {
+		return entityManager.createQuery("from Department").getResultList();
+	}
 
-        return entityManager.createQuery("from Department").getResultList();
-    }
+	public List<Department> getByCompany(String name) {
+		return entityManager.createQuery("from Department as department where department.company.name like :name ")
+				.setParameter("name", name).getResultList();
+	}
 
-    public List<Department> getByCompany(String name) {
-        return entityManager.createQuery("from Department as department where department.company.name like :name ")
-                .setParameter("name", name).getResultList();
-    }
+	public void create(Department Department) {
+		entityManager.persist(Department);
+	}
 
-    public void create(Department Department) {
-        entityManager.persist(Department);
-    }
+	public void update(Department Department) {
+		entityManager.merge(Department);
+	}
 
-    public void update(Department Department) {
-        entityManager.merge(Department);
-    }
-
-    public void delete(long id) {
-        Department Department = entityManager.find(Department.class, id);
-        if (Department != null) {
-            entityManager.remove(Department);
-        }
-    }
+	public void delete(long id) {
+		Department Department = entityManager.find(Department.class, id);
+		if (Department != null) {
+			entityManager.remove(Department);
+		}
+	}
 }

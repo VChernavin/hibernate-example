@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @EnableWebMvc
 @Configuration
-@ComponentScan({ "hiberExample.controllers" })
+@ComponentScan({"hiberExample.controllers"})
 public class WebConfig implements WebMvcConfigurer {
 	@Override
 	public void configureMessageConverters(

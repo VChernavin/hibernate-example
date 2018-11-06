@@ -43,7 +43,7 @@ public class EmployeeDao {
 	}
 
 	public Employee update(Employee employee) {
-		return  entityManager.merge(employee);
+		return entityManager.merge(employee);
 	}
 
 	public void delete(long id) {
