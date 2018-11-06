@@ -1,5 +1,6 @@
 package hiberExample.models;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -10,12 +11,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import lombok.Data;
 
 @Entity(name = "Employee")
 @Data
-public class Employee {
+public class Employee implements Serializable {
+	private static final long serialVersionUID = -8862221534248259742L;
 	@Id
 	@GeneratedValue
 	private long id;
@@ -34,4 +37,7 @@ public class Employee {
 	@ManyToOne
 	@JoinColumn(name = "company_id")
 	private Company company;
+
+	@OneToOne(fetch = FetchType.LAZY)
+	private EmployeeDetails employeeDetails;
 }

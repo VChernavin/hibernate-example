@@ -11,6 +11,7 @@
     <postgresql.version>42.2.5</postgresql.version>
     <ehcache-core.version>2.6.10</ehcache-core.version>
     <lombok.version>1.18.4</lombok.version>
+    <log4jdbc.version>1.0.2</log4jdbc.version>
 
   </properties>
   <parent>
@@ -141,7 +142,7 @@
     <dependency>
       <groupId>com.integralblue</groupId>
       <artifactId>log4jdbc-spring-boot-starter</artifactId>
-      <version>1.0.2</version>
+      <version>${log4jdbc.version}</version>
     </dependency>
 
   </dependencies>

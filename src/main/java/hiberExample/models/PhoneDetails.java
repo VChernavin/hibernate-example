@@ -1,5 +1,7 @@
 package hiberExample.models;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -14,7 +16,8 @@ import lombok.Data;
 @Data
 @Table(uniqueConstraints = {
 		@UniqueConstraint( columnNames = {"provider","technology"})})
-public class PhoneDetails {
+public class PhoneDetails implements Serializable {
+	private static final long serialVersionUID = 6852971138593126414L;
 	@Id
 	@GeneratedValue
 	private Long id;

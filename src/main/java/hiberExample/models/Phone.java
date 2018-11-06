@@ -1,5 +1,7 @@
 package hiberExample.models;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +13,8 @@ import lombok.Data;
 
 @Entity(name = "Phone")
 @Data
-public class Phone {
+public class Phone implements Serializable {
+	private static final long serialVersionUID = 4534997364572346033L;
 	@Id
 	@GeneratedValue
 	private Long id;
