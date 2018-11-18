@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import hiberExample.dto.CompanyBaseDto;
+import hiberExample.dto.CompanyDto;
 import hiberExample.models.Company;
 import hiberExample.services.CompanyService;
 
@@ -21,44 +23,48 @@ import hiberExample.services.CompanyService;
 @RequestMapping("/company")
 public class CompanyController {
 
+	private final CompanyService companyService;
+
 	@Autowired
-	private CompanyService companyService;
+	public CompanyController(CompanyService companyService) {
+		this.companyService = companyService;
+	}
 
 	@GetMapping
-
 	public @ResponseBody
 	List<Company> getAll() {
 		return companyService.getAll();
 	}
 
 	@GetMapping(value = "/{id}")
-
 	public @ResponseBody
-	Company get(@PathVariable Long id) {
+	CompanyDto get(@PathVariable Long id) {
 		return companyService.get(id);
 	}
 
-	@GetMapping(value = "/filter")
-
+	@GetMapping(value = "base/{id}")
 	public @ResponseBody
-	Company get(@RequestParam String name) {
+	CompanyBaseDto getBase(@PathVariable Long id) {
+		return companyService.getBase(id);
+	}
+
+	@GetMapping(value = "/filter")
+	public @ResponseBody
+	CompanyDto get(@RequestParam String name) {
 		return companyService.get(name);
 	}
 
 	@PostMapping
-
 	public void create(@RequestBody Company company) {
 		companyService.create(company);
 	}
 
 	@PutMapping
-
 	public void update(@RequestBody Company company) {
 		companyService.update(company);
 	}
 
 	@DeleteMapping(value = "/{id}")
-
 	public void delete(@PathVariable Long id) {
 		companyService.delete(id);
 	}

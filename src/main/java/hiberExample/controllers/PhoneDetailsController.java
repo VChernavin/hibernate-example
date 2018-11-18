@@ -21,8 +21,12 @@ import hiberExample.services.PhoneDetailsService;
 @RequestMapping("/phoneDetails")
 public class PhoneDetailsController {
 
+	private final PhoneDetailsService phoneDetailsService;
+
 	@Autowired
-	private PhoneDetailsService phoneDetailsService;
+	public PhoneDetailsController(PhoneDetailsService phoneDetailsService) {
+		this.phoneDetailsService = phoneDetailsService;
+	}
 
 	@GetMapping
 

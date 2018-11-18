@@ -10,60 +10,58 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import hiberExample.models.Phone;
-import hiberExample.services.PhoneService;
+import hiberExample.dto.OfficeBaseDto;
+import hiberExample.dto.OfficeDto;
+import hiberExample.models.Office;
+import hiberExample.services.OfficeService;
+
 
 @RestController
-@RequestMapping("/phone")
-public class PhoneController {
+@RequestMapping("/office")
+public class OfficeController {
 
-	private final PhoneService phoneService;
+	private final OfficeService officeService;
 
 	@Autowired
-	public PhoneController(PhoneService phoneService) {
-		this.phoneService = phoneService;
+	public OfficeController(OfficeService officeService) {
+		this.officeService = officeService;
 	}
 
 	@GetMapping
-
 	public @ResponseBody
-	List<Phone> getAll() {
-		return phoneService.getAll();
+	List<Office> getAll() {
+		return officeService.getAll();
+	}
+
+
+	@PostMapping
+	public void create(@RequestBody Office office) {
+		officeService.create(office);
 	}
 
 	@GetMapping(value = "/{id}")
-
 	public @ResponseBody
-	Phone get(@PathVariable Long id) {
-		return phoneService.get(id);
+	OfficeDto get(@PathVariable Long id) {
+		return officeService.get(id);
 	}
 
-	@GetMapping(value = "/provider")
 
+	@GetMapping(value = "/base/{id}")
 	public @ResponseBody
-	Phone getByProvider(@RequestParam String number) {
-		return phoneService.getByNumber(number);
-	}
-
-	@PostMapping
-
-	public void create(@RequestBody Phone phone) {
-		phoneService.create(phone);
+	OfficeBaseDto getBase(@PathVariable Long id) {
+		return officeService.getBase(id);
 	}
 
 	@PutMapping
-
-	public Phone update(@RequestBody Phone phone) {
-		return phoneService.update(phone);
+	public void update(@RequestBody Office office) {
+		officeService.update(office);
 	}
 
 	@DeleteMapping(value = "/{id}")
-
 	public void delete(@PathVariable Long id) {
-		phoneService.delete(id);
+		officeService.delete(id);
 	}
 }

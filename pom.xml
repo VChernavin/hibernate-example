@@ -131,6 +131,12 @@
       <artifactId>log4jdbc-spring-boot-starter</artifactId>
       <version>${log4jdbc.version}</version>
     </dependency>
+    
+    <dependency>
+      <groupId>net.sf.dozer</groupId>
+      <artifactId>dozer</artifactId>
+      <version>5.4.0</version>
+    </dependency>
 
   </dependencies>
 </project>

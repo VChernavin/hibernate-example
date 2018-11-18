@@ -6,8 +6,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
+import org.dozer.DozerBeanMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import hiberExample.dto.CompanyBaseDto;
+import hiberExample.dto.CompanyDto;
 import hiberExample.models.Company;
 
 @Repository
@@ -17,14 +21,22 @@ public class CompanyDao {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public Company getById(long id) {
-		return entityManager.find(Company.class, id);
+	@Autowired
+	private DozerBeanMapper dozerBeanMapper;
+
+	public CompanyDto getById(long id) {
+		return dozerBeanMapper.map(entityManager.find(Company.class, id), CompanyDto.class);
 	}
 
-	public Company getByName(String name) {
+	public CompanyBaseDto getBaseById(long id) {
 
-		return (Company) entityManager.createQuery("from Company where name = :name ")
-				.setParameter("name", name).getSingleResult();
+			return dozerBeanMapper.map(entityManager.find(Company.class, id), CompanyBaseDto.class);
+	}
+
+	public CompanyDto getByName(String name) {
+
+		return dozerBeanMapper.map(entityManager.createQuery("from Company where name = :name ")
+				.setParameter("name", name).getSingleResult(),CompanyDto.class);
 	}
 
 	public List<Company> getAll() {

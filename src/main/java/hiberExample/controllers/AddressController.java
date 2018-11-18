@@ -10,60 +10,48 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import hiberExample.models.Phone;
-import hiberExample.services.PhoneService;
+import hiberExample.models.Address;
+import hiberExample.services.AddressService;
+
 
 @RestController
-@RequestMapping("/phone")
-public class PhoneController {
-
-	private final PhoneService phoneService;
+@RequestMapping("/address")
+public class AddressController {
+	private final AddressService addressService;
 
 	@Autowired
-	public PhoneController(PhoneService phoneService) {
-		this.phoneService = phoneService;
+	public AddressController(AddressService addressService) {
+		this.addressService = addressService;
 	}
 
 	@GetMapping
-
 	public @ResponseBody
-	List<Phone> getAll() {
-		return phoneService.getAll();
+	List<Address> getAll() {
+		return addressService.getAll();
+	}
+
+
+	@PostMapping
+	public void create(@RequestBody Address address) {
+		addressService.create(address);
 	}
 
 	@GetMapping(value = "/{id}")
-
 	public @ResponseBody
-	Phone get(@PathVariable Long id) {
-		return phoneService.get(id);
-	}
-
-	@GetMapping(value = "/provider")
-
-	public @ResponseBody
-	Phone getByProvider(@RequestParam String number) {
-		return phoneService.getByNumber(number);
-	}
-
-	@PostMapping
-
-	public void create(@RequestBody Phone phone) {
-		phoneService.create(phone);
+	Address get(@PathVariable Long id) {
+		return addressService.get(id);
 	}
 
 	@PutMapping
-
-	public Phone update(@RequestBody Phone phone) {
-		return phoneService.update(phone);
+	public void update(@RequestBody Address address) {
+		addressService.update(address);
 	}
 
 	@DeleteMapping(value = "/{id}")
-
 	public void delete(@PathVariable Long id) {
-		phoneService.delete(id);
+		addressService.delete(id);
 	}
 }

@@ -2,15 +2,19 @@ package hiberExample.services;
 
 import java.util.List;
 
+import hiberExample.dto.CompanyBaseDto;
+import hiberExample.dto.CompanyDto;
 import hiberExample.models.Company;
 
 public interface CompanyService {
 
 	List<Company> getAll();
 
-	Company get(Long id);
+	CompanyDto get(Long id);
 
-	Company get(String name);
+	CompanyBaseDto getBase(Long id);
+
+	CompanyDto get(String name);
 
 	void create(Company company);
 

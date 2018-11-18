@@ -20,8 +20,12 @@ import hiberExample.services.DepartmentService;
 @RestController
 @RequestMapping("/department")
 public class DepartmentController {
+	private final DepartmentService departmentService;
+
 	@Autowired
-	private DepartmentService departmentService;
+	public DepartmentController(DepartmentService departmentService) {
+		this.departmentService = departmentService;
+	}
 
 	@GetMapping
 

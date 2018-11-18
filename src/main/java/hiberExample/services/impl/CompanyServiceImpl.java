@@ -7,6 +7,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import hiberExample.dao.CompanyDao;
+import hiberExample.dto.CompanyBaseDto;
+import hiberExample.dto.CompanyDto;
 import hiberExample.models.Company;
 import hiberExample.services.CompanyService;
 
@@ -20,13 +22,17 @@ public class CompanyServiceImpl implements CompanyService {
 		return companyDao.getAll();
 	}
 
-	@Cacheable(value = "company.byId", key = "#id", unless = "#result != null and #result.name.toUpperCase().startsWith('TEST')")
-	public Company get(Long id) {
+//	@Cacheable(value = "company.byId", key = "#id", unless = "#result != null and #result.name.toUpperCase().startsWith('TEST')")
+	public CompanyDto get(Long id) {
 		return companyDao.getById(id);
 	}
 
-	@Cacheable(value = "company.byName", key = "#name", unless = "#result != null and #result.name.toUpperCase().startsWith('TEST')")
-	public Company get(String name) {
+	public CompanyBaseDto getBase(Long id) {
+		return companyDao.getBaseById(id);
+	}
+
+//	@Cacheable(value = "company.byName", key = "#name", unless = "#result != null and #result.name.toUpperCase().startsWith('TEST')")
+	public CompanyDto get(String name) {
 		return companyDao.getByName(name);
 	}
 
