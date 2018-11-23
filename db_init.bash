@@ -30,23 +30,28 @@ BODY=$(echo \{\"name\":\"$1\",\"address\":$(getAddresByID $2),\"company\": $(get
 curl -X POST -H "Content-Type: application/json" -d "$BODY" localhost:8080/office 2>/dev/null
 }
 
+for VAR in $(seq 1 101) ; do
+   setCompany company$VAR
+#   getCompanyByName company$VAR
+
+done
 
 
-setCompany company1
-setCompany company2
-setCompany company3
-setCompany company4
+#setCompany company1
+#setCompany company2
+#setCompany company3
+#setCompany company4
 
-setCar "CAR 0001" company1
-setCar "CAR 0002" company1
-setCar "CAR 0011" company2
-setCar "CAR 0012" company2
+#setCar "CAR 0001" company1
+#setCar "CAR 0002" company1
+#setCar "CAR 0011" company2
+#setCar "CAR 0012" company2
+#
+#setAddress hn1 st1 zip1
+#setAddress hn2 st2 zip2
+#setAddress hn3 st3 zip3
 
-setAddress hn1 st1 zip1
-setAddress hn2 st2 zip2
-setAddress hn3 st3 zip3
-
-setOffice of1 9 1
+#setOffice of1 9 1
 
 #curl -X POST -H "Content-Type: application/json" -d '{"name":"company1"}' localhost:8080/company
 #curl -X POST -H "Content-Type: application/json" -d '{"name":"company2"}' localhost:8080/company

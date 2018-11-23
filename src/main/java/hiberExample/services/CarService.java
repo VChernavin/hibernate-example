@@ -2,18 +2,18 @@ package hiberExample.services;
 
 import java.util.List;
 
-import hiberExample.models.Car;
+import hiberExample.dto.CarDto;
 
 public interface CarService {
-	List<Car> getAll();
+	List<CarDto> getAll();
 
-	List<Car> getByCompany(String name);
+	List<CarDto> getByCompany(String name);
 
-	Car get(Long id);
+	CarDto get(Long id);
 
-	void create(Car car);
+	void create(CarDto car);
 
-	void update(Car car);
+	void update(CarDto car);
 
 	void delete(Long id);
 }

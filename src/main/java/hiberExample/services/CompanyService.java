@@ -8,7 +8,7 @@ import hiberExample.models.Company;
 
 public interface CompanyService {
 
-	List<Company> getAll();
+	List<CompanyDto> getAll();
 
 	CompanyDto get(Long id);
 
@@ -16,9 +16,9 @@ public interface CompanyService {
 
 	CompanyDto get(String name);
 
-	void create(Company company);
+	void create(CompanyDto company);
 
-	void update(Company company);
+	void update(CompanyDto company);
 
 	void delete(Long id);
 }

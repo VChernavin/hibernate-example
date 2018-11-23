@@ -6,13 +6,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
-import org.dozer.DozerBeanMapper;
-import org.dozer.spring.DozerBeanMapperFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import hiberExample.dto.OfficeBaseDto;
 import hiberExample.dto.OfficeDto;
+import hiberExample.helper.DozerHelper;
 import hiberExample.models.Office;
 
 @Repository
@@ -22,16 +21,19 @@ public class OfficeDao {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	@Autowired
-	private DozerBeanMapper dozerBeanMapper;
+	private final DozerHelper dozerHelper;
 
+	@Autowired
+	public OfficeDao(DozerHelper dozerHelper) {
+		this.dozerHelper = dozerHelper;
+	}
 
 	public OfficeDto getById(long id) {
-		return dozerBeanMapper.map(entityManager.find(Office.class, id), OfficeDto.class);
+		return dozerHelper.map(entityManager.find(Office.class, id), OfficeDto.class);
 	}
 
 	public OfficeBaseDto getBaseById(long id) {
-		return dozerBeanMapper.map(entityManager.find(Office.class, id), OfficeBaseDto.class);
+		return dozerHelper.map(entityManager.find(Office.class, id), OfficeBaseDto.class);
 	}
 
 

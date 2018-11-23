@@ -32,7 +32,7 @@ public class CompanyController {
 
 	@GetMapping
 	public @ResponseBody
-	List<Company> getAll() {
+	List<CompanyDto> getAll() {
 		return companyService.getAll();
 	}
 
@@ -42,7 +42,7 @@ public class CompanyController {
 		return companyService.get(id);
 	}
 
-	@GetMapping(value = "base/{id}")
+	@GetMapping(value = "/base/{id}")
 	public @ResponseBody
 	CompanyBaseDto getBase(@PathVariable Long id) {
 		return companyService.getBase(id);
@@ -55,12 +55,12 @@ public class CompanyController {
 	}
 
 	@PostMapping
-	public void create(@RequestBody Company company) {
+	public void create(@RequestBody CompanyDto company) {
 		companyService.create(company);
 	}
 
 	@PutMapping
-	public void update(@RequestBody Company company) {
+	public void update(@RequestBody CompanyDto company) {
 		companyService.update(company);
 	}
 

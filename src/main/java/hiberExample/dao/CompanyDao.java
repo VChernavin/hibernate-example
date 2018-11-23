@@ -6,12 +6,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
-import org.dozer.DozerBeanMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
-import hiberExample.dto.CompanyBaseDto;
-import hiberExample.dto.CompanyDto;
 import hiberExample.models.Company;
 
 @Repository
@@ -21,22 +18,21 @@ public class CompanyDao {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	@Autowired
-	private DozerBeanMapper dozerBeanMapper;
-
-	public CompanyDto getById(long id) {
-		return dozerBeanMapper.map(entityManager.find(Company.class, id), CompanyDto.class);
+	@Cacheable(value = "company.byId", key = "#id", unless = "#result != null and #result.name.toUpperCase().startsWith('TEST')")
+	public Company getById(long id) {
+		return entityManager.find(Company.class, id);
 	}
 
-	public CompanyBaseDto getBaseById(long id) {
+	public Company getBaseById(long id) {
 
-			return dozerBeanMapper.map(entityManager.find(Company.class, id), CompanyBaseDto.class);
+			return entityManager.find(Company.class, id);
 	}
 
-	public CompanyDto getByName(String name) {
+	@Cacheable(value = "company.byName", key = "#name", unless = "#result != null and #result.name.toUpperCase().startsWith('TEST')")
+	public Company getByName(String name) {
 
-		return dozerBeanMapper.map(entityManager.createQuery("from Company where name = :name ")
-				.setParameter("name", name).getSingleResult(),CompanyDto.class);
+		return (Company) entityManager.createQuery("from Company where name = :name ")
+				.setParameter("name", name).getSingleResult();
 	}
 
 	public List<Company> getAll() {

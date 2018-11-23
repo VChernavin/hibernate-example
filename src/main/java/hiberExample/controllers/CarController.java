@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import hiberExample.models.Car;
+import hiberExample.dto.CarDto;
 import hiberExample.services.CarService;
 
 @RestController
@@ -26,33 +26,33 @@ public class CarController {
 	@GetMapping
 
 	public @ResponseBody
-	List<Car> getAll() {
+	List<CarDto> getAll() {
 		return carService.getAll();
 	}
 
 	@GetMapping(value = "/filterByCompany")
 
 	public @ResponseBody
-	List<Car> getByCompany(String name) {
+	List<CarDto> getByCompany(String name) {
 		return carService.getByCompany(name);
 	}
 
 	@PostMapping
 
-	public void create(@RequestBody Car car) {
+	public void create(@RequestBody CarDto car) {
 		carService.create(car);
 	}
 
 	@GetMapping(value = "/{id}")
 
 	public @ResponseBody
-	Car get(@PathVariable Long id) {
+	CarDto get(@PathVariable Long id) {
 		return carService.get(id);
 	}
 
 	@PutMapping
 
-	public void update(@RequestBody Car car) {
+	public void update(@RequestBody CarDto car) {
 		carService.update(car);
 	}
 
