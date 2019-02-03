@@ -20,7 +20,7 @@ import hiberExample.models.Company;
 import hiberExample.services.CompanyService;
 
 @RestController
-@RequestMapping("/company")
+@RequestMapping("/api/company")
 public class CompanyController {
 
 	private final CompanyService companyService;

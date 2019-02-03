@@ -1,7 +1,7 @@
 #!/bin/bash
 
 getCompanyByName () {
-curl  localhost:8080/company/filter?name=$1 2>/dev/null
+curl  localhost:8080/api/company/filter?name=$1 2>/dev/null
 }
 
 getAddresByID () {
@@ -12,7 +12,7 @@ BODY=$(echo \{\"registrationNumber\":\"$1\",\"company\":$(getCompanyByName $2)\}
 curl -X POST -H "Content-Type: application/json" -d "$BODY" localhost:8080/car 2>/dev/null
 }
 setCompany () {
-curl -X POST -H "Content-Type: application/json" -d \{\"name\":\"$1\"\} localhost:8080/company 2>/dev/null
+curl -X POST -H "Content-Type: application/json" -d \{\"name\":\"$1\"\} localhost:8080/api/company 2>/dev/null
 
 }
 
