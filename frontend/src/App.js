@@ -1,36 +1,83 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
+import ReactDOM from 'react-dom';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.css';
+import './index.css'
+import {
+  Collapse,
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
+  Nav,
+  Navbar,
+  NavbarBrand,
+  NavbarToggler,
+  NavItem,
+  NavLink,
+  UncontrolledDropdown
+} from 'reactstrap';
+import {CompanyTable} from "./containers/CompanyTable.react";
+import {AddressTable} from "./containers/AddressTable.react";
 
-class App extends Component {
 
-    state = {};
+export default class App extends Component {
+  constructor(props) {
+    super(props);
 
-    componentDidMount() {
-        setInterval(this.getAllCompanies, 2500);
-    }
+  }
 
-    getAllCompanies = () => {
-        fetch('/api/company')
-            .then(response => response.text())
-            .then(message => {
-                this.setState({message: message});
-            });
-    };
 
-    render() {
-        return (
-            <div className="App">
-                <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo"/>
-                    <h1 className="App-title">{this.state.message}</h1>
-                </header>
-                <p className="App-intro">
-                    To get started, edit <code>src/App.js</code> and save to reload.
-                </p>
-            </div>
-        );
-    }
+
+
+  render() {
+
+    return (
+      <div >
+        <Navbar expand >
+          <NavbarBrand href="/" >REACT+SPRING+Hibernate example</NavbarBrand >
+          <NavbarToggler onClick={this.toggle} />
+          <Collapse  navbar >
+            <Nav className="ml-auto" navbar >
+              <NavItem >
+                <NavLink href="/components/" >Components</NavLink >
+              </NavItem >
+              <NavItem >
+                <NavLink href="https://github.com/VChernavin/hibernate-example" >GitHub</NavLink >
+              </NavItem >
+              <UncontrolledDropdown nav inNavbar >
+                <DropdownToggle nav caret >
+                  Options
+                </DropdownToggle >
+                <DropdownMenu right >
+                  <DropdownItem >
+                    Option 1
+                  </DropdownItem >
+                  <DropdownItem >
+                    Option 2
+                  </DropdownItem >
+                  <DropdownItem divider />
+                  <DropdownItem >
+                    Reset
+                  </DropdownItem >
+                </DropdownMenu >
+              </UncontrolledDropdown >
+            </Nav >
+          </Collapse >
+        </Navbar >
+
+        {/*<CompanyList companies={this.state.companies}*/}
+                     {/*onDelete={this.onDeleteRow}*/}
+                     {/*onAdd={this.onAddRow}*/}
+                     {/*refresh={this.refreshList} />*/}
+        <CompanyTable  />
+        <AddressTable  />
+      </div >
+    );
+  }
 }
 
-export default App;
+
+ReactDOM.render(
+  <App />,
+  document.getElementById('root')
+);

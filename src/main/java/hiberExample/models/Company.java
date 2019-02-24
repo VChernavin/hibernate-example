@@ -22,7 +22,7 @@ public class Company implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String name;
 
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "company_id")

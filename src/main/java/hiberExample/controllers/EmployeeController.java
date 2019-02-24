@@ -18,7 +18,7 @@ import hiberExample.models.Employee;
 import hiberExample.services.EmployeeService;
 
 @RestController
-@RequestMapping("/employee")
+@RequestMapping("/api/employee")
 public class EmployeeController {
 
 	private final EmployeeService employeeService;

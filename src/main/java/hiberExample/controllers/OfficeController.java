@@ -20,7 +20,7 @@ import hiberExample.services.OfficeService;
 
 
 @RestController
-@RequestMapping("/office")
+@RequestMapping("/api/office")
 public class OfficeController {
 
 	private final OfficeService officeService;

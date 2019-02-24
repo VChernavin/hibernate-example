@@ -18,7 +18,7 @@ import hiberExample.models.Department;
 import hiberExample.services.DepartmentService;
 
 @RestController
-@RequestMapping("/department")
+@RequestMapping("/api/department")
 public class DepartmentController {
 	private final DepartmentService departmentService;
 

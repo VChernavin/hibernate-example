@@ -3,6 +3,7 @@ package hiberExample.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +19,8 @@ import hiberExample.services.AddressService;
 
 
 @RestController
-@RequestMapping("/address")
+@RequestMapping("/api/address")
+@CrossOrigin(origins = "http://localhost:3000")
 public class AddressController {
 	private final AddressService addressService;
 

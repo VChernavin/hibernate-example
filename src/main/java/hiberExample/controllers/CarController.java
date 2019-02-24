@@ -17,7 +17,7 @@ import hiberExample.dto.CarDto;
 import hiberExample.services.CarService;
 
 @RestController
-@RequestMapping("/car")
+@RequestMapping("/api/car")
 public class CarController {
 
 	@Autowired
