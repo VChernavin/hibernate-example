@@ -1,13 +1,13 @@
 import React from "react";
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
-import {getCompanies, onAdd, onDelete,onUpdate} from "../api/api";
+import {getCompanies, onAdd, onDelete, onUpdate} from "../api/api";
 
 const cellEditProp = {
   mode: 'click',
   blurToSave: true
 };
 
-const OBJECT_TYPE ='company';
+const OBJECT_TYPE = 'company';
 
 
 export class CompanyTable extends React.Component {
@@ -17,22 +17,19 @@ export class CompanyTable extends React.Component {
       companies: []
     };
 
-    this.onAddRow = this.onAddRow.bind(this);
-    this.onDeleteRow = this.onDeleteRow.bind(this);
-    this.onCellEdit = this.onCellEdit.bind(this);
-    this.setStateHandler = this.setStateHandler.bind(this);
+
   }
 
   componentDidMount() {
     getCompanies(OBJECT_TYPE, this.setStateHandler);
   }
 
-  onAddRow(row) {
+  onAddRow = (row) => {
     onAdd(OBJECT_TYPE, this.setStateHandler, {name: row.name});
 
   }
 
-  onDeleteRow(row) {
+  onDeleteRow = (row) => {
     onDelete(OBJECT_TYPE, this.setStateHandler, row);
 
   };
@@ -50,16 +47,16 @@ export class CompanyTable extends React.Component {
     if (targetRow) {
       targetRow[fieldName] = value;
       console.log(typeof targetRow);
-      onUpdate(OBJECT_TYPE,this.setStateHandler, targetRow);
+      onUpdate(OBJECT_TYPE, this.setStateHandler, targetRow);
     }
   };
 
-  setStateHandler(res) {
+  setStateHandler = (res) => {
     const companies = res.data;
     this.setState({companies});
-  }
+  };
 
-   render() {
+  render() {
 
     const options = {
       onAddRow: this.onAddRow,
@@ -75,7 +72,7 @@ export class CompanyTable extends React.Component {
                       cellEdit={cellEditProp}
                       options={options}
                       insertRow={true}
-                      striped hover condensed>
+                      striped hover condensed >
         <TableHeaderColumn width='100' dataField='id' editable={false} isKey >ID</TableHeaderColumn >
         <TableHeaderColumn dataField='name' >Name</TableHeaderColumn >
       </BootstrapTable >

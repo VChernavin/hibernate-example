@@ -1,13 +1,13 @@
 import React from "react";
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
-import {getCompanies, onAdd, onDelete,onUpdate} from "../api/api";
+import {getCompanies, onAdd, onDelete, onUpdate} from "../api/api";
 
 const cellEditProp = {
   mode: 'click',
   blurToSave: true
 };
 
-const OBJECT_TYPE ='address';
+const OBJECT_TYPE = 'address';
 
 
 export class AddressTable extends React.Component {
@@ -16,18 +16,14 @@ export class AddressTable extends React.Component {
     this.state = {
       addressList: []
     };
-
-    this.onAddRow = this.onAddRow.bind(this);
-    this.onDeleteRow = this.onDeleteRow.bind(this);
-    this.onCellEdit = this.onCellEdit.bind(this);
-    this.setStateHandler = this.setStateHandler.bind(this);
+    
   }
 
   componentDidMount() {
     getCompanies(OBJECT_TYPE, this.setStateHandler);
   }
 
-  onAddRow(row) {
+  onAddRow = (row) => {
     onAdd(OBJECT_TYPE, this.setStateHandler, {
       houseNumber: row.houseNumber,
       street: row.street,
@@ -36,7 +32,7 @@ export class AddressTable extends React.Component {
 
   }
 
-  onDeleteRow(row) {
+  onDeleteRow = (row) => {
     onDelete(OBJECT_TYPE, this.setStateHandler, row);
 
   };
@@ -54,11 +50,11 @@ export class AddressTable extends React.Component {
     if (targetRow) {
       targetRow[fieldName] = value;
       console.log(typeof targetRow);
-      onUpdate(OBJECT_TYPE,this.setStateHandler, targetRow);
+      onUpdate(OBJECT_TYPE, this.setStateHandler, targetRow);
     }
   };
 
-  setStateHandler(res) {
+  setStateHandler = (res) => {
     const addressList = res.data;
     this.setState({addressList});
   }
@@ -78,11 +74,11 @@ export class AddressTable extends React.Component {
                       selectRow={{mode: 'checkbox'}}
                       cellEdit={cellEditProp}
                       options={options}
-                      insertRow={true} striped hover condensed>
+                      insertRow={true} striped hover condensed >
         <TableHeaderColumn width='100' dataField='id' editable={false} isKey >ID</TableHeaderColumn >
-        <TableHeaderColumn width='1200' dataField='street' >Street</TableHeaderColumn >
+        <TableHeaderColumn dataField='street' >Street</TableHeaderColumn >
         <TableHeaderColumn width='100' dataField='houseNumber' >House Number</TableHeaderColumn >
-        <TableHeaderColumn width='600' dataField='zipCode' >ZIP Code</TableHeaderColumn >
+        <TableHeaderColumn width='400' dataField='zipCode' >ZIP Code</TableHeaderColumn >
       </BootstrapTable >
     );
   }
