@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {Route, BrowserRouter as Router} from "react-router-dom";
-import {Navigation} from "./containers/Navigation.react";
-import {CompanyTable} from "./containers/CompanyTable.react";
-import {AddressTable} from "./containers/AddressTable.react";
+import Navigation from "./containers/Navigation.react";
+import CompanyTable from "./containers/CompanyTable.react";
+import AddressTable from "./containers/AddressTable.react";
 
 ReactDOM.render(
   <Router >

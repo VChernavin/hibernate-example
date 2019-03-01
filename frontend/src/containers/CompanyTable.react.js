@@ -1,6 +1,7 @@
 import React from "react";
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import {getCompanies, onAdd, onDelete, onUpdate} from "../api/api";
+import CSVReader from "../containers/CSVReader.react";
 
 const cellEditProp = {
   mode: 'click',
@@ -10,7 +11,7 @@ const cellEditProp = {
 const OBJECT_TYPE = 'company';
 
 
-export class CompanyTable extends React.Component {
+export default class CompanyTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,7 +28,7 @@ export class CompanyTable extends React.Component {
   onAddRow = (row) => {
     onAdd(OBJECT_TYPE, this.setStateHandler, {name: row.name});
 
-  }
+  };
 
   onDeleteRow = (row) => {
     onDelete(OBJECT_TYPE, this.setStateHandler, row);
@@ -64,18 +65,45 @@ export class CompanyTable extends React.Component {
       onCellEdit: this.onCellEdit
     };
 
+    // const paramNames = [];
+    //
+    // const resultList = [];
+    //
+    // const createObject = (item, index) => {
+    //   if (index === 0) {
+    //     item.forEach(propenty => paramNames.push(propenty));
+    //   } else if (item[0] !== "") {
+    //     const tmpObj = {};
+    //     item.forEach((item, index) => {
+    //       tmpObj[paramNames[index]] = item;
+    //       // console.log(tmpObj);
+    //       resultList.push(tmpObj);
+    //     })
+    //   }
+    // };
+
+    const handleForce = data => {
+      data.forEach(obj => onAdd(OBJECT_TYPE, this.setStateHandler, obj));
+    };
+
     return (
-      <BootstrapTable data={this.state.companies}
-                      remote={true}
-                      deleteRow={true}
-                      selectRow={{mode: 'checkbox'}}
-                      cellEdit={cellEditProp}
-                      options={options}
-                      insertRow={true}
-                      striped hover condensed >
-        <TableHeaderColumn width='100' dataField='id' editable={false} isKey >ID</TableHeaderColumn >
-        <TableHeaderColumn dataField='name' >Name</TableHeaderColumn >
-      </BootstrapTable >
+      <div className="react-bs-container" >
+        <CSVReader onFileLoaded={handleForce} />
+
+        <BootstrapTable data={this.state.companies}
+                        remote={true}
+                        deleteRow={true}
+                        selectRow={{mode: 'checkbox'}}
+                        cellEdit={cellEditProp}
+                        options={options}
+                        insertRow={true}
+                        exportCSV={true}
+                        striped hover condensed >
+          <TableHeaderColumn width='100' dataField='id' editable={false} isKey export={false} >ID</TableHeaderColumn >
+          <TableHeaderColumn dataField='name' >Name</TableHeaderColumn >
+        </BootstrapTable >
+      </div >
+
     );
   }
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import {getCompanies, onAdd, onDelete, onUpdate} from "../api/api";
+import CSVReader from "./CSVReader.react";
 
 const cellEditProp = {
   mode: 'click',
@@ -10,13 +11,13 @@ const cellEditProp = {
 const OBJECT_TYPE = 'address';
 
 
-export class AddressTable extends React.Component {
+export default class AddressTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       addressList: []
     };
-    
+
   }
 
   componentDidMount() {
@@ -30,7 +31,7 @@ export class AddressTable extends React.Component {
       zipCode: row.zipCode
     });
 
-  }
+  };
 
   onDeleteRow = (row) => {
     onDelete(OBJECT_TYPE, this.setStateHandler, row);
@@ -57,7 +58,7 @@ export class AddressTable extends React.Component {
   setStateHandler = (res) => {
     const addressList = res.data;
     this.setState({addressList});
-  }
+  };
 
   render() {
 
@@ -67,19 +68,28 @@ export class AddressTable extends React.Component {
       onCellEdit: this.onCellEdit
     };
 
+    const handleForce = data => {
+      data.forEach(obj => onAdd(OBJECT_TYPE, this.setStateHandler, obj));
+    };
+
     return (
-      <BootstrapTable data={this.state.addressList}
-                      remote={true}
-                      deleteRow={true}
-                      selectRow={{mode: 'checkbox'}}
-                      cellEdit={cellEditProp}
-                      options={options}
-                      insertRow={true} striped hover condensed >
-        <TableHeaderColumn width='100' dataField='id' editable={false} isKey >ID</TableHeaderColumn >
-        <TableHeaderColumn dataField='street' >Street</TableHeaderColumn >
-        <TableHeaderColumn width='100' dataField='houseNumber' >House Number</TableHeaderColumn >
-        <TableHeaderColumn width='400' dataField='zipCode' >ZIP Code</TableHeaderColumn >
-      </BootstrapTable >
+      <div>
+        <CSVReader onFileLoaded={handleForce} />
+        <BootstrapTable data={this.state.addressList}
+                        remote={true}
+                        deleteRow={true}
+                        selectRow={{mode: 'checkbox'}}
+                        cellEdit={cellEditProp}
+                        options={options}
+                        exportCSV={true}
+                        insertRow={true}
+                        striped hover condensed >
+          <TableHeaderColumn width='100' dataField='id' editable={false} isKey export={false}>ID</TableHeaderColumn >
+          <TableHeaderColumn dataField='street' >Street</TableHeaderColumn >
+          <TableHeaderColumn width='100' dataField='houseNumber' >House Number</TableHeaderColumn >
+          <TableHeaderColumn width='400' dataField='zipCode' >ZIP Code</TableHeaderColumn >
+        </BootstrapTable >
+      </div>
     );
   }
 }

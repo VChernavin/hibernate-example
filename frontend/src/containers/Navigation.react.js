@@ -15,7 +15,7 @@ import {
 
 
 
-export class Navigation extends Component {
+export default class Navigation extends Component {
   render() {
 
     return (
