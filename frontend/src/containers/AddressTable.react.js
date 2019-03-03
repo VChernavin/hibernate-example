@@ -1,6 +1,6 @@
 import React from "react";
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
-import {getCompanies, onAdd, onDelete, onUpdate} from "../api/api";
+import {getData, onAdd, onDelete, onUpdate} from "../api/api";
 import CSVReader from "./CSVReader.react";
 
 const cellEditProp = {
@@ -21,7 +21,7 @@ export default class AddressTable extends React.Component {
   }
 
   componentDidMount() {
-    getCompanies(OBJECT_TYPE, this.setStateHandler);
+    getData(OBJECT_TYPE, this.setStateHandler);
   }
 
   onAddRow = (row) => {

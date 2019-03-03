@@ -6,6 +6,7 @@ import {Route, BrowserRouter as Router} from "react-router-dom";
 import Navigation from "./containers/Navigation.react";
 import CompanyTable from "./containers/CompanyTable.react";
 import AddressTable from "./containers/AddressTable.react";
+import OfficeTable from "./containers/OfficeTable.react";
 
 ReactDOM.render(
   <Router >
@@ -13,6 +14,7 @@ ReactDOM.render(
       <Navigation />
       <Route path="/companies" component={CompanyTable} />
       <Route path="/addresses" component={AddressTable} />
+      <Route path="/offices" component={OfficeTable} />
     </div >
   </Router >,
   document.getElementById('root'));

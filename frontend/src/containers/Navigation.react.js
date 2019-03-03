@@ -32,6 +32,9 @@ export default class Navigation extends Component {
                 <NavLink tag={Link} to="/addresses" >Addresses</NavLink >
               </NavItem >
               <NavItem >
+                <NavLink tag={Link} to="/offices" >Offices</NavLink >
+              </NavItem >
+              <NavItem >
                 <NavLink href="https://github.com/VChernavin/hibernate-example" >GitHub</NavLink >
               </NavItem >
               <UncontrolledDropdown nav inNavbar >
