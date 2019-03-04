@@ -8,10 +8,17 @@ import CompanyTable from "./containers/CompanyTable.react";
 import AddressTable from "./containers/AddressTable.react";
 import OfficeTable from "./containers/OfficeTable.react";
 
+class HomePage extends React.Component {
+  render() {
+    return <div>Home Page</div>
+  }
+}
+
 ReactDOM.render(
   <Router >
     <div >
       <Navigation />
+      <Route exact path="/" component={HomePage} />
       <Route path="/companies" component={CompanyTable} />
       <Route path="/addresses" component={AddressTable} />
       <Route path="/offices" component={OfficeTable} />
