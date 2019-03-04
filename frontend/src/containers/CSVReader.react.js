@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import PapaParse from 'papaparse';
+import './CSVReader.css';
 
 export default class CSVReader extends React.Component {
 
@@ -79,12 +80,10 @@ export default class CSVReader extends React.Component {
 
 
     return (
-      <div className={this.props.cssClass} >
-        <label className={this.props.cssInputClass} >
-          Import CSV <input type="file" hidden
-                            onChange={handleChangeFile} />
-        </label >
-      </div >
+    <div className="file btn btn-sm btn-success csv-div" >
+      Import CSV
+      <input className="csv-input" type="file" name="file" onChange={handleChangeFile}/>
+    </div >
     );
   }
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import {BootstrapTable, ButtonGroup, TableHeaderColumn} from 'react-bootstrap-table';
 import {getData, onAdd, onDelete, onUpdate} from "../api/api";
 import CSVReader from "./CSVReader.react";
 
@@ -61,20 +61,30 @@ export default class AddressTable extends React.Component {
   };
 
   render() {
+    const btnGroup = props => {
+      return (
+        <ButtonGroup className='my-custom-class' sizeClass='btn-group-sm' >
+
+          <CSVReader onFileLoaded={importCSV} />
+          {props.exportCSVBtn}
+          {props.insertBtn}
+          {props.deleteBtn}
+        </ButtonGroup >
+      );
+    };
+    const importCSV = data => {
+      data.forEach(obj => onAdd(OBJECT_TYPE, this.setStateHandler, obj));
+    };
 
     const options = {
       onAddRow: this.onAddRow,
       onDeleteRow: this.onDeleteRow,
-      onCellEdit: this.onCellEdit
-    };
-
-    const handleForce = data => {
-      data.forEach(obj => onAdd(OBJECT_TYPE, this.setStateHandler, obj));
+      onCellEdit: this.onCellEdit,
+      btnGroup,
     };
 
     return (
-      <div>
-        <CSVReader onFileLoaded={handleForce} />
+      <div >
         <BootstrapTable data={this.state.addressList}
                         remote={true}
                         deleteRow={true}
@@ -84,12 +94,12 @@ export default class AddressTable extends React.Component {
                         exportCSV={true}
                         insertRow={true}
                         striped hover condensed >
-          <TableHeaderColumn width='100' dataField='id' editable={false} isKey export={false}>ID</TableHeaderColumn >
+          <TableHeaderColumn width='100' dataField='id' editable={false} isKey export={false} >ID</TableHeaderColumn >
           <TableHeaderColumn dataField='street' >Street</TableHeaderColumn >
           <TableHeaderColumn width='100' dataField='houseNumber' >House Number</TableHeaderColumn >
           <TableHeaderColumn width='400' dataField='zipCode' >ZIP Code</TableHeaderColumn >
         </BootstrapTable >
-      </div>
+      </div >
     );
   }
 }
