@@ -1,5 +1,5 @@
 import React from "react";
-import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import {BootstrapTable, ButtonGroup, TableHeaderColumn} from 'react-bootstrap-table';
 import {getData, onAdd, onDelete, onUpdate} from "../api/api";
 import CSVReader from "../containers/CSVReader.react";
 
@@ -53,17 +53,9 @@ export default class CompanyTable extends React.Component {
 
   onCellEdit = (row, fieldName, value) => {
     const {companies} = this.state;
-    let rowIdx;
-    const targetRow = companies.find((prod, i) => {
-      if (prod.id === row.id) {
-        rowIdx = i;
-        return true;
-      }
-      return false;
-    });
+    const targetRow = companies.find(prod => prod.id === row.id);
     if (targetRow) {
       targetRow[fieldName] = value;
-      console.log(typeof targetRow);
       onUpdate(OBJECT_TYPE, this.setStateHandler, targetRow);
     }
   };
@@ -75,11 +67,27 @@ export default class CompanyTable extends React.Component {
 
   render() {
 
+    const btnGroup = props => {
+      return (
+        <ButtonGroup className='btn-group-sm' sizeClass='btn-group-sm' >
+
+          <CSVReader onFileLoaded={importCSV} />
+          {props.exportCSVBtn}
+          {props.insertBtn}
+          {props.deleteBtn}
+        </ButtonGroup >
+      );
+    };
+    const importCSV = data => {
+      data.forEach(obj => onAdd(OBJECT_TYPE, this.setStateHandler, obj));
+    };
+
     const options = {
       onAddRow: this.onAddRow,
       onDeleteRow: this.onDeleteRow,
       onCellEdit: this.onCellEdit,
       expandRowBgColor: 'MediumAquamarine',
+      btnGroup,
     };
 
     const selectRow = {
@@ -108,10 +116,6 @@ export default class CompanyTable extends React.Component {
     };
 
 
-    const handleForce = data => {
-      data.forEach(obj => onAdd(OBJECT_TYPE, this.setStateHandler, obj));
-    };
-
     const isExpandableRow = row => row.offices.length > 0;
 
     const expandComponent = row => {
@@ -129,10 +133,9 @@ export default class CompanyTable extends React.Component {
       );
     };
 
+
     return (
       <div className="react-bs-container" >
-        <CSVReader onFileLoaded={handleForce} />
-
         <BootstrapTable data={this.state.companies}
                         remote={true}
                         deleteRow={true}
@@ -145,7 +148,7 @@ export default class CompanyTable extends React.Component {
                         insertRow={true}
                         exportCSV={true}
                         striped hover condensed >
-          <TableHeaderColumn width='100' dataField='id' editable={false} isKey export={false} hiddenOnInsert>ID</TableHeaderColumn >
+          <TableHeaderColumn width='100' dataField='id' editable={false} isKey export={false} hiddenOnInsert >ID</TableHeaderColumn >
           <TableHeaderColumn dataField='name' >Name</TableHeaderColumn >
         </BootstrapTable >
       </div >

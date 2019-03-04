@@ -1,5 +1,5 @@
 import React from "react";
-import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import {BootstrapTable, ButtonGroup, TableHeaderColumn} from 'react-bootstrap-table';
 import {getData, onAdd, onDelete, onUpdate} from "../api/api";
 import CSVReader from "./CSVReader.react";
 
@@ -54,20 +54,16 @@ export default class OfficeTable extends React.Component {
   };
 
   onCellEdit = (row, fieldName, value) => {
-    const {officeList} = this.state;
-    let rowIdx;
-    const targetRow = officeList.find((prod, i) => {
-      if (prod.id === row.id) {
-        rowIdx = i;
-        return true;
-      }
-      return false;
-    });
-    if (targetRow) {
-      targetRow[fieldName] = value;
-      console.log(typeof targetRow);
-      onUpdate(OBJECT_TYPE, this.setStateHandler, targetRow);
-    }
+    console.log(row);
+    const targetRow = {
+      id: row.id,
+      name: fieldName === "name" ? value: row.name,
+      address: fieldName === "address" ? this.state.addressMap.get(value) : this.state.addressMap.get(row.address),
+      company_id: fieldName === "company" ? this.state.companyMap.get(value) : this.state.companyMap.get(row.company[0]),
+    };
+    console.log(targetRow);
+
+    onUpdate(OBJECT_TYPE, this.setStateHandler, targetRow);
   };
 
   setStateHandler = res => {
@@ -82,20 +78,31 @@ export default class OfficeTable extends React.Component {
 
   render() {
 
+    const btnGroup = props => {
+      return (
+        <ButtonGroup className='my-custom-class' sizeClass='btn-group-sm' >
+
+          <CSVReader onFileLoaded={importCSV} />
+          {props.exportCSVBtn}
+          {props.insertBtn}
+          {props.deleteBtn}
+        </ButtonGroup >
+      );
+    };
+    const importCSV = data => {
+      data.forEach(obj => onAdd(OBJECT_TYPE, this.setStateHandler, obj));
+    };
+
     const options = {
       onAddRow: this.onAddRow,
       onDeleteRow: this.onDeleteRow,
-      onCellEdit: this.onCellEdit
-    };
-
-    const handleForce = data => {
-      data.forEach(obj => onAdd(OBJECT_TYPE, this.setStateHandler, obj));
+      onCellEdit: this.onCellEdit,
+      btnGroup,
     };
 
 
     return (
       <div >
-        <CSVReader onFileLoaded={handleForce} />
         <BootstrapTable data={this.state.officeList}
                         remote={true}
                         deleteRow={true}

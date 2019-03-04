@@ -40,17 +40,10 @@ export default class AddressTable extends React.Component {
 
   onCellEdit = (row, fieldName, value) => {
     const {addressList} = this.state;
-    let rowIdx;
-    const targetRow = addressList.find((prod, i) => {
-      if (prod.id === row.id) {
-        rowIdx = i;
-        return true;
-      }
-      return false;
-    });
+
+    const targetRow = addressList.find(prod =>  prod.id === row.id);
     if (targetRow) {
       targetRow[fieldName] = value;
-      console.log(typeof targetRow);
       onUpdate(OBJECT_TYPE, this.setStateHandler, targetRow);
     }
   };

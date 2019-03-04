@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 
 export default class Menu extends React.Component {
@@ -13,19 +13,15 @@ export default class Menu extends React.Component {
   }
 
 
-  clicked = (focused) => {
-
-    this.setState({focused});
-    console.log(this.state.focused)
-  };
+  clicked = (focused) => this.setState({focused});
 
   render() {
 
     return (
-      <div className="btn-group btn-group-lg" role="group">
-        {this.props.items.map((m, index)=> {
+      <div className="btn-group btn-group-lg" role="group" >
+        {this.props.items.map((m, index) => {
           const style = this.state.focused === index ? 'btn btn-primary btn-lg' : 'btn btn-outline-info btn-lg';
-           return <Link className={style} onClick={this.clicked.bind(this, index)} to={m.link}>{m.text}</Link>;
+          return <Link className={style} key={index} onClick={this.clicked.bind(this, index)} to={m.link} >{m.text}</Link >;
         })}
       </div >
     );
