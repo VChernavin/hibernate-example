@@ -25,7 +25,6 @@ export const onDelete = (objectType, setStateHandler, id) => {
 
 export const onAdd = (objectType, setStateHandler, object) => {
   const url = `http://localhost:8080/api/${objectType}`;
-  console.log(object);
   axios.post(url, object).then(() => {
     getData(objectType, setStateHandler)
   }).catch(errorHandler);
@@ -34,7 +33,6 @@ export const onAdd = (objectType, setStateHandler, object) => {
 
 export const onAddList = (objectType, setStateHandler, objectList) => {
   const url = `http://localhost:8080/api/${objectType}/list`;
-  console.log(objectList);
   axios.post(url, objectList).then(() => {
     getData(objectType, setStateHandler)
   }).catch(errorHandler);

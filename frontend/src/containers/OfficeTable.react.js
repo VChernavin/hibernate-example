@@ -59,14 +59,12 @@ export default class OfficeTable extends React.Component {
   };
 
   onCellEdit = (row, fieldName, value) => {
-    console.log(row);
     const targetRow = {
       id: row.id,
       name: fieldName === "name" ? value: row.name,
       address: fieldName === "address" ? this.state.addressMap.get(value) : this.state.addressMap.get(row.address),
       company_id: fieldName === "company" ? this.state.companyMap.get(value) : this.state.companyMap.get(row.company[0]),
     };
-    console.log(targetRow);
 
     onUpdate(OBJECT_TYPE, this.setStateHandler, targetRow);
   };
