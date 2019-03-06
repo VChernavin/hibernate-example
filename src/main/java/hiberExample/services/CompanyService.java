@@ -18,6 +18,8 @@ public interface CompanyService {
 
 	void create(CompanyDto company);
 
+	void create(List<CompanyDto> companies);
+
 	void update(CompanyDto company);
 
 	void delete(Long id);

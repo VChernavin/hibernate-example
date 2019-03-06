@@ -1,8 +1,7 @@
 import React from "react";
 import {BootstrapTable, ButtonGroup, TableHeaderColumn} from 'react-bootstrap-table';
 import {getData, onAdd, onDelete, onUpdate} from "../api/api";
-import CSVReader from "./CSVReader.react";
-import TableButtonGroup from "./AddressTable.react";
+import TableButtonGroup from "./TableButtonGroup.react";
 
 const cellEditProp = {
   mode: 'click',
@@ -10,6 +9,8 @@ const cellEditProp = {
 };
 
 const OBJECT_TYPE = 'office';
+
+
 
 
 export default class OfficeTable extends React.Component {
@@ -40,12 +41,15 @@ export default class OfficeTable extends React.Component {
     });
   }
 
-  onAddRow = (row) => {
-    onAdd(OBJECT_TYPE, this.setStateHandler, {
-      name: row.name,
-      company_id: this.state.companyMap.get(row.company),
-      address: this.state.addressMap.get(row.address),
-    });
+  parseOffice = office => {
+    return{
+      name: office.name,
+      company_id: this.state.companyMap.get(office.company),
+      address: this.state.addressMap.get(office.address),
+    }};
+
+  onAddRow = row => {
+    onAdd(OBJECT_TYPE, this.setStateHandler, this.parseOffice(row));
 
   };
 
@@ -82,7 +86,7 @@ export default class OfficeTable extends React.Component {
     const btnGroup = props => <TableButtonGroup exportCSVBtn={props.exportCSVBtn}
                                                 insertBtn={props.insertBtn}
                                                 deleteBtn={props.deleteBtn}
-                                                onCSVFileLoaded={data => data.forEach(obj => onAdd(OBJECT_TYPE, this.setStateHandler, obj))}/>;
+                                                onCSVFileLoaded={data => data.forEach(obj => onAdd(OBJECT_TYPE, this.setStateHandler, this.parseOffice(obj)))}/>;
 
 
     const options = {

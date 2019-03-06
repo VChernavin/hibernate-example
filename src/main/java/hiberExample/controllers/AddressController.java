@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import hiberExample.models.Address;
+import hiberExample.dto.AddressDto;
 import hiberExample.services.AddressService;
 
 
@@ -31,24 +31,29 @@ public class AddressController {
 
 	@GetMapping
 	public @ResponseBody
-	List<Address> getAll() {
+	List<AddressDto> getAll() {
 		return addressService.getAll();
 	}
 
 
 	@PostMapping
-	public void create(@RequestBody Address address) {
+	public void create(@RequestBody AddressDto address) {
 		addressService.create(address);
+	}
+
+	@PostMapping(value = "/list")
+	public void create(@RequestBody List<AddressDto> addresses) {
+		addressService.create(addresses);
 	}
 
 	@GetMapping(value = "/{id}")
 	public @ResponseBody
-	Address get(@PathVariable Long id) {
+	AddressDto get(@PathVariable Long id) {
 		return addressService.get(id);
 	}
 
 	@PutMapping
-	public void update(@RequestBody Address address) {
+	public void update(@RequestBody AddressDto address) {
 		addressService.update(address);
 	}
 

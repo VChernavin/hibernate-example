@@ -36,6 +36,13 @@ public class AddressDao {
 		entityManager.persist(Address);
 	}
 
+	@Transactional
+	public void create(List<Address> addresses) {
+		for (Address address : addresses) {
+			entityManager.persist(address);
+		}
+	}
+
 	public Address update(Address Address) {
 		return entityManager.merge(Address);
 	}

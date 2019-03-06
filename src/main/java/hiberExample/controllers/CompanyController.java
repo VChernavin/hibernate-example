@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import hiberExample.dto.CompanyBaseDto;
 import hiberExample.dto.CompanyDto;
-import hiberExample.models.Company;
 import hiberExample.services.CompanyService;
 
 @RestController
@@ -59,6 +58,11 @@ public class CompanyController {
 	@PostMapping
 	public void create(@RequestBody CompanyDto company) {
 		companyService.create(company);
+	}
+
+	@PostMapping(value = "/list")
+	public void create(@RequestBody List<CompanyDto> companies) {
+		companyService.create(companies);
 	}
 
 	@PutMapping

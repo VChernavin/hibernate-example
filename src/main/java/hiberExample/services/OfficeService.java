@@ -7,15 +7,17 @@ import hiberExample.dto.OfficeDto;
 import hiberExample.models.Office;
 
 public interface OfficeService {
-	List<Office> getAll();
+	List<OfficeDto> getAll();
 
 	OfficeDto get(Long id);
 
 	OfficeBaseDto getBase(Long id);
 
-	void create(Office office);
+	void create(OfficeDto office);
 
-	void update(Office office);
+	void create(List<OfficeDto> office);
+
+	void update(OfficeDto office);
 
 	void delete(Long id);
 }

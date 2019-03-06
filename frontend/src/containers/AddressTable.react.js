@@ -1,8 +1,7 @@
 import React from "react";
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import {getData, onAdd, onDelete, onUpdate} from "../api/api";
-import TableButtonGroup from './TableBouttonGroup.react';
-import {createBtnGroup} from '../util';
+import TableButtonGroup from './TableButtonGroup.react';
 
 const cellEditProp = {
   mode: 'click',

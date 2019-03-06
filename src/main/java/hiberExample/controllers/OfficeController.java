@@ -34,13 +34,18 @@ public class OfficeController {
 
 	@GetMapping
 	public @ResponseBody
-	List<Office> getAll() {
+	List<OfficeDto> getAll() {
 		return officeService.getAll();
 	}
 
 
 	@PostMapping
-	public void create(@RequestBody Office office) {
+	public void create(@RequestBody OfficeDto office) {
+		officeService.create(office);
+	}
+
+	@PostMapping(value = "/list")
+	public void create(@RequestBody List<OfficeDto> office) {
 		officeService.create(office);
 	}
 
@@ -58,7 +63,7 @@ public class OfficeController {
 	}
 
 	@PutMapping
-	public void update(@RequestBody Office office) {
+	public void update(@RequestBody OfficeDto office) {
 		officeService.update(office);
 	}
 

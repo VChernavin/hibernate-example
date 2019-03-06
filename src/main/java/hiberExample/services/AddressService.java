@@ -2,17 +2,20 @@ package hiberExample.services;
 
 import java.util.List;
 
+import hiberExample.dto.AddressDto;
 import hiberExample.models.Address;
 
 public interface AddressService {
-	List<Address> getAll();
+	List<AddressDto> getAll();
 
-	Address get(Long id);
+	AddressDto get(Long id);
 
 
-	void create(Address address);
+	void create(AddressDto address);
 
-	void update(Address address);
+	void create(List<AddressDto> companies);
+
+	void update(AddressDto address);
 
 	void delete(Long id);
 }

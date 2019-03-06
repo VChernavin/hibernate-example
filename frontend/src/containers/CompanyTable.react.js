@@ -1,8 +1,7 @@
 import React from "react";
-import {BootstrapTable, ButtonGroup, TableHeaderColumn} from 'react-bootstrap-table';
-import {getData, onAdd, onDelete, onUpdate} from "../api/api";
-import CSVReader from "../containers/CSVReader.react";
-import TableButtonGroup from "./AddressTable.react";
+import {BootstrapTable,  TableHeaderColumn} from 'react-bootstrap-table';
+import {getData, onAdd, onAddList, onDelete, onUpdate} from "../api/api";
+import TableButtonGroup from "./TableButtonGroup.react";
 
 const cellEditProp = {
   mode: 'click',
@@ -71,7 +70,7 @@ export default class CompanyTable extends React.Component {
     const btnGroup = props => <TableButtonGroup exportCSVBtn={props.exportCSVBtn}
                                                 insertBtn={props.insertBtn}
                                                 deleteBtn={props.deleteBtn}
-                                                onCSVFileLoaded={data => data.forEach(obj => onAdd(OBJECT_TYPE, this.setStateHandler, obj))}/>;
+                                                onCSVFileLoaded={data => onAddList(OBJECT_TYPE, this.setStateHandler, data)}/>;
 
 
     const options = {

@@ -50,6 +50,11 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
+	public void create(List<CompanyDto> companies){
+		companyDao.create(dozerHelper.mapList(companies, Company.class));
+	}
+
+	@Override
 	public void update(CompanyDto company) {
 		companyDao.update(dozerHelper.map(company, Company.class));
 	}

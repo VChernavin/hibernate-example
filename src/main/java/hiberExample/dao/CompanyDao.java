@@ -25,7 +25,7 @@ public class CompanyDao {
 
 	public Company getBaseById(long id) {
 
-			return entityManager.find(Company.class, id);
+		return entityManager.find(Company.class, id);
 	}
 
 	@Cacheable(value = "company.byName", key = "#name", unless = "#result != null and #result.name.toUpperCase().startsWith('TEST')")
@@ -42,6 +42,13 @@ public class CompanyDao {
 
 	public void create(Company company) {
 		entityManager.persist(company);
+	}
+
+	@Transactional
+	public void create(List<Company> companies) {
+		for (Company company : companies) {
+			entityManager.persist(company);
+		}
 	}
 
 	public void update(Company company) {

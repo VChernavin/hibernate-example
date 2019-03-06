@@ -6,35 +6,46 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hiberExample.dao.AddressDao;
+import hiberExample.dto.AddressDto;
+import hiberExample.helper.DozerHelper;
 import hiberExample.models.Address;
 import hiberExample.services.AddressService;
 
 @Service
 public class AddressServiceImpl implements AddressService {
+	private final AddressDao addressDao;
+	private final DozerHelper dozerHelper;
+
 	@Autowired
-	private AddressDao addressDao;
-
-	public List<Address> getAll() {
-		return addressDao.getAll();
+	public AddressServiceImpl(AddressDao addressDao, DozerHelper dozerHelper) {
+		this.addressDao = addressDao;
+		this.dozerHelper = dozerHelper;
 	}
 
-	public List<Address> getByCompany(String name) {
-		return addressDao.getByCompany(name);
+	public List<AddressDto> getAll() {
+		return dozerHelper.mapList(addressDao.getAll(), AddressDto.class);
 	}
 
-	public Address get(Long id) {
-		return addressDao.getById(id);
+	public AddressDto get(Long id) {
+		return dozerHelper.map(addressDao.getById(id), AddressDto.class);
 	}
 
-
-	public void create(Address address) {
-		addressDao.create(address);
+	@Override
+	public void create(AddressDto address) {
+		addressDao.create(dozerHelper.map(address, Address.class));
 	}
 
-	public void update(Address address) {
-		addressDao.update(address);
+	@Override
+	public void create(List<AddressDto> companies) {
+		addressDao.create(dozerHelper.mapList(companies, Address.class));
 	}
 
+	@Override
+	public void update(AddressDto address) {
+		addressDao.update(dozerHelper.map(address,Address.class));
+	}
+
+	@Override
 	public void delete(Long id) {
 		addressDao.delete(id);
 	}
