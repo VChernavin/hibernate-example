@@ -2,6 +2,7 @@ import React from "react";
 import {BootstrapTable, ButtonGroup, TableHeaderColumn} from 'react-bootstrap-table';
 import {getData, onAdd, onDelete, onUpdate} from "../api/api";
 import CSVReader from "../containers/CSVReader.react";
+import TableButtonGroup from "./AddressTable.react";
 
 const cellEditProp = {
   mode: 'click',
@@ -67,20 +68,11 @@ export default class CompanyTable extends React.Component {
 
   render() {
 
-    const btnGroup = props => {
-      return (
-        <ButtonGroup className='btn-group-sm' sizeClass='btn-group-sm' >
+    const btnGroup = props => <TableButtonGroup exportCSVBtn={props.exportCSVBtn}
+                                                insertBtn={props.insertBtn}
+                                                deleteBtn={props.deleteBtn}
+                                                onCSVFileLoaded={data => data.forEach(obj => onAdd(OBJECT_TYPE, this.setStateHandler, obj))}/>;
 
-          <CSVReader onFileLoaded={importCSV} />
-          {props.exportCSVBtn}
-          {props.insertBtn}
-          {props.deleteBtn}
-        </ButtonGroup >
-      );
-    };
-    const importCSV = data => {
-      data.forEach(obj => onAdd(OBJECT_TYPE, this.setStateHandler, obj));
-    };
 
     const options = {
       onAddRow: this.onAddRow,
