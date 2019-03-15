@@ -2211,9 +2211,9 @@ GitHub Pages doesn’t support routers that use the HTML5 `pushState` history AP
 
 #### Troubleshooting
 
-##### "/dev/tty: No such a device or address"
+##### "/dev/tty: No such a device or data"
 
-If, when deploying, you get `/dev/tty: No such a device or address` or a similar error, try the follwing:
+If, when deploying, you get `/dev/tty: No such a device or data` or a similar error, try the follwing:
 
 1. Create a new [Personal Access Token](https://github.com/settings/tokens)
 2. `git remote set-url origin https://<user>:<token>@github.com/<user>/<repo>` .

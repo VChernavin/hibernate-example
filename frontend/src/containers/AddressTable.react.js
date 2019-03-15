@@ -1,7 +1,12 @@
 import React from "react";
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
-import {getData, onAdd, onDelete, onUpdate} from "../api/api";
+import {getBindedApi} from "../api/api";
 import TableButtonGroup from './TableButtonGroup.react';
+import {connect} from "react-redux";
+import {receivedList, updateMenu} from "../actions/actions";
+import {ADDRESSES_MENU_ITEM} from "../constants/menuItems";
+import {ADDRESS_API_ID} from "../constants/api";
+
 
 const cellEditProp = {
   mode: 'click',
@@ -39,21 +44,18 @@ export default class AddressTable extends React.Component {
   };
 
   onCellEdit = (row, fieldName, value) => {
-    const {addressList} = this.state;
-
-    const targetRow = addressList.find(prod =>  prod.id === row.id);
+    const {addressList} = this.props;
+    const targetRow = addressList.find(prod => prod.id === row.id);
     if (targetRow) {
       targetRow[fieldName] = value;
       onUpdate(OBJECT_TYPE, this.setStateHandler, targetRow);
     }
   };
 
-  setStateHandler = (res) => {
-    const addressList = res.data;
-    this.setState({addressList});
-  };
 
   render() {
+
+
     const btnGroup = props => <TableButtonGroup exportCSVBtn={props.exportCSVBtn}
                                                 insertBtn={props.insertBtn}
                                                 deleteBtn={props.deleteBtn}
@@ -69,7 +71,7 @@ export default class AddressTable extends React.Component {
 
     return (
       <div >
-        <BootstrapTable data={this.state.addressList}
+        <BootstrapTable data={this.props.addressList}
                         remote={true}
                         deleteRow={true}
                         selectRow={{mode: 'checkbox'}}

@@ -1,30 +1,33 @@
 import React from "react";
 import {Link} from 'react-router-dom'
+import {connect} from "react-redux";
+import {updateMenu} from "../actions/actions";
 
 
-export default class Menu extends React.Component {
+export class Menu extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      focused: 0
-    };
-
-  }
-
-
-  clicked = (focused) => this.setState({focused});
 
   render() {
 
     return (
       <div className="btn-group btn-group-lg" role="group" >
         {this.props.items.map((m, index) => {
-          const style = this.state.focused === index ? 'btn btn-primary btn-lg' : 'btn btn-outline-info btn-lg';
-          return <Link className={style} key={index} onClick={this.clicked.bind(this, index)} to={m.link} >{m.text}</Link >;
+          const style = this.props.focused === m.text ? 'btn btn-primary btn-lg' : 'btn btn-outline-info btn-lg';
+          return <Link className={style} key={index} to={m.link} >{m.text}</Link >;
         })}
       </div >
     );
 
   }
 }
+
+export default connect(
+  state => ({
+    focused: state.menuReducer.focused
+  }),
+  dispatch => ({
+    updateMenu: (focused) => {
+      dispatch(updateMenu(focused));
+    }
+  })
+)(Menu);

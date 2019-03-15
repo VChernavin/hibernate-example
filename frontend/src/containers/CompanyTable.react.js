@@ -1,14 +1,17 @@
 import React from "react";
-import {BootstrapTable,  TableHeaderColumn} from 'react-bootstrap-table';
-import {getData, onAdd, onAddList, onDelete, onUpdate} from "../api/api";
+import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import {getBindedApi} from "../api/api";
 import TableButtonGroup from "./TableButtonGroup.react";
+import {connect} from "react-redux";
+import {receivedList, updateMenu} from "../actions/actions";
+import {COMPANIES_MENU_ITEM} from "../constants/menuItems";
+import {COMPANY_API_ID} from "../constants/api";
 
 const cellEditProp = {
   mode: 'click',
   blurToSave: true
 };
 
-const OBJECT_TYPE = 'company';
 
 class BSTable extends React.Component {
   render() {
@@ -27,50 +30,41 @@ class BSTable extends React.Component {
   }
 }
 
-export default class CompanyTable extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      companies: []
-    };
+export class CompanyTable extends React.Component {
 
-
-  }
+  api = getBindedApi(COMPANY_API_ID, this.props.receivedCompanyList);
 
   componentDidMount() {
-    getData(OBJECT_TYPE, this.setStateHandler);
+    this.props.updateMenu(COMPANIES_MENU_ITEM.text);
+    this.api.getData();
   }
 
   onAddRow = (row) => {
-    onAdd(OBJECT_TYPE, this.setStateHandler, {name: row.name});
+    this.api.onAdd({name: row.name});
 
   };
 
   onDeleteRow = (row) => {
-    onDelete(OBJECT_TYPE, this.setStateHandler, row);
+    this.api.onDelete(row);
 
   };
 
   onCellEdit = (row, fieldName, value) => {
-    const {companies} = this.state;
-    const targetRow = companies.find(prod => prod.id === row.id);
+    const {companyList} = this.props;
+    const targetRow = companyList.find(prod => prod.id === row.id);
     if (targetRow) {
       targetRow[fieldName] = value;
-      onUpdate(OBJECT_TYPE, this.setStateHandler, targetRow);
+      this.api.onUpdate(targetRow);
     }
   };
 
-  setStateHandler = (res) => {
-    const companies = res.data;
-    this.setState({companies});
-  };
 
   render() {
 
     const btnGroup = props => <TableButtonGroup exportCSVBtn={props.exportCSVBtn}
                                                 insertBtn={props.insertBtn}
                                                 deleteBtn={props.deleteBtn}
-                                                onCSVFileLoaded={data => onAddList(OBJECT_TYPE, this.setStateHandler, data)}/>;
+                                                onCSVFileLoaded={data => this.api.onAddList(data)} />;
 
 
     const options = {
@@ -127,7 +121,7 @@ export default class CompanyTable extends React.Component {
 
     return (
       <div className="react-bs-container" >
-        <BootstrapTable data={this.state.companies}
+        <BootstrapTable data={this.props.companyList}
                         remote={true}
                         deleteRow={true}
                         selectRow={selectRow}
@@ -147,3 +141,16 @@ export default class CompanyTable extends React.Component {
     );
   }
 }
+
+export default connect(
+  state => ({
+    companyList: state.receivedDataReducer.companyList,
+  }),
+  dispatch => ({
+    updateMenu: (focused) => {
+      dispatch(updateMenu(focused));
+    }, receivedCompanyList: (list) => {
+      dispatch(receivedList(list, COMPANY_API_ID));
+    },
+  })
+)(CompanyTable);

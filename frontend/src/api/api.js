@@ -7,6 +7,11 @@ const errorHandler = error => {
   alert(error.response === undefined ? error.message : error.response.data.message)
 };
 
+export const getDataNew = (objectType) => {
+
+  return axios.get(`http://localhost:8080/api/${objectType}`).then(res => res.data);
+
+};
 export const getData = (objectType, setStateHandler) => {
   return axios.get(`http://localhost:8080/api/${objectType}`).then(setStateHandler);
 
@@ -41,9 +46,18 @@ export const onAddList = (objectType, setStateHandler, objectList) => {
 
 export const onUpdate = (objectType, setStateHandler, object) => {
   const url = `http://localhost:8080/api/${objectType}`;
-
   axios.put(url, object).then(() => {
     getData(objectType, setStateHandler)
   }).catch(errorHandler);
 
+};
+
+export const getBindedApi = (apiId, callback) =>{
+     return {
+       getData:getData.bind(this,apiId,callback),
+       onDelete:onDelete.bind(this,apiId,callback),
+       onAdd:onAdd.bind(this,apiId,callback),
+       onAddList:onAddList.bind(this,apiId,callback),
+       onUpdate:onUpdate.bind(this,apiId,callback),
+     }
 };

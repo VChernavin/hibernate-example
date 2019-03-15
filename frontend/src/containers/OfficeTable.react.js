@@ -1,90 +1,62 @@
 import React from "react";
-import {BootstrapTable, ButtonGroup, TableHeaderColumn} from 'react-bootstrap-table';
-import {getData, onAdd, onDelete, onUpdate} from "../api/api";
+import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import {getBindedApi, getData} from "../api/api";
 import TableButtonGroup from "./TableButtonGroup.react";
+import {connect} from "react-redux";
+import {receivedList, updateMenu} from "../actions/actions";
+import {OFFICES_MENU_ITEM} from "../constants/menuItems";
+import {ADDRESS_API_ID, COMPANY_API_ID, OFFICE_API_ID} from "../constants/api";
 
 const cellEditProp = {
   mode: 'click',
   blurToSave: true
 };
 
-const OBJECT_TYPE = 'office';
 
+export class OfficeTable extends React.Component {
 
-
-
-export default class OfficeTable extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      officeList: [],
-      companyMap: new Map(),
-      addressMap: new Map(),
-    };
-
-  }
+  api = getBindedApi(OFFICE_API_ID, this.props.receivedOfficeList);
 
   componentDidMount() {
-    getData('company', res => {
-      const companyMap = new Map();
-      res.data.forEach(company => companyMap.set(company.name, company.id));
-      this.setState({companyMap});
-    }).then(() => {
-        return getData('address', res => {
-          const addressMap = new Map();
-          res.data.forEach(address => addressMap.set(`${address.street} , ${address.houseNumber} , ${address.zipCode}`, address));
-          this.setState({addressMap});
-        })
-      }
-    ).then(() => {
-      return getData(OBJECT_TYPE, this.setStateHandler)
-    });
+    this.props.updateMenu(OFFICES_MENU_ITEM.text);
+    getData(COMPANY_API_ID, this.props.receivedCompanyList)
+      .then(() => getData(ADDRESS_API_ID, this.props.receivedAddressList))
+      .then(this.api.getData);
   }
 
-  parseOffice = office => {
-    return{
-      name: office.name,
-      company_id: this.state.companyMap.get(office.company),
-      address: this.state.addressMap.get(office.address),
-    }};
+  parseOffice = office => ({
+    name: office.name,
+    company_id: this.props.companyMap.get(office.company).id,
+    address: this.props.addressMap.get(office.address),
+  });
 
   onAddRow = row => {
-    onAdd(OBJECT_TYPE, this.setStateHandler, this.parseOffice(row));
+    this.api.onAdd(this.parseOffice(row));
 
   };
 
   onDeleteRow = (row) => {
-    onDelete(OBJECT_TYPE, this.setStateHandler, row);
+    this.api.onDelete(row);
 
   };
 
   onCellEdit = (row, fieldName, value) => {
     const targetRow = {
       id: row.id,
-      name: fieldName === "name" ? value: row.name,
-      address: fieldName === "address" ? this.state.addressMap.get(value) : this.state.addressMap.get(row.address),
-      company_id: fieldName === "company" ? this.state.companyMap.get(value) : this.state.companyMap.get(row.company[0]),
+      name: fieldName === "name" ? value : row.name,
+      address: fieldName === "address" ? this.props.addressMap.get(value) : this.props.addressMap.get(row.address),
+      company_id: fieldName === "company" ? this.props.companyMap.get(value).id : this.props.companyMap.get(row.company).id,
     };
-
-    onUpdate(OBJECT_TYPE, this.setStateHandler, targetRow);
+    this.api.onUpdate(targetRow);
   };
 
-  setStateHandler = res => {
-    const officeList = res.data.map(value => ({
-      id: value.id,
-      name: value.name,
-      address: `${value.address.street} , ${value.address.houseNumber} , ${value.address.zipCode}`,
-      company: [...this.state.companyMap.entries()].filter(([key, mapValue]) => mapValue === value.company_id).map(([key]) => key),
-    }));
-    this.setState({officeList});
-  };
 
   render() {
 
     const btnGroup = props => <TableButtonGroup exportCSVBtn={props.exportCSVBtn}
                                                 insertBtn={props.insertBtn}
                                                 deleteBtn={props.deleteBtn}
-                                                onCSVFileLoaded={data => data.forEach(obj => onAdd(OBJECT_TYPE, this.setStateHandler, this.parseOffice(obj)))}/>;
+                                                onCSVFileLoaded={data => data.forEach(obj => this.api.onAdd(this.parseOffice(obj)))} />;
 
 
     const options = {
@@ -94,10 +66,9 @@ export default class OfficeTable extends React.Component {
       btnGroup,
     };
 
-
     return (
       <div >
-        <BootstrapTable data={this.state.officeList}
+        <BootstrapTable data={this.props.officeList}
                         remote={true}
                         deleteRow={true}
                         selectRow={{mode: 'checkbox'}}
@@ -109,11 +80,41 @@ export default class OfficeTable extends React.Component {
           <TableHeaderColumn width='100' dataField='id' editable={false} isKey export={false} >ID</TableHeaderColumn >
           <TableHeaderColumn width='400' dataField='name' >Name</TableHeaderColumn >
           <TableHeaderColumn width='400' dataField='company'
-                             editable={{type: 'select', options: {values: [...this.state.companyMap.keys()]}}} >Company</TableHeaderColumn >
+                             editable={{type: 'select', options: {values: [...this.props.companyMap.keys()]}}} >Company</TableHeaderColumn >
           <TableHeaderColumn dataField='address'
-                             editable={{type: 'select', options: {values: [...this.state.addressMap.keys()]}}} >Address</TableHeaderColumn >
+                             editable={{type: 'select', options: {values: [...this.props.addressMap.keys()]}}} >Address</TableHeaderColumn >
         </BootstrapTable >
       </div >
     );
   }
 }
+
+
+export default connect(
+  state => ({
+      companyMap: new Map(state.receivedDataReducer.companyList.map(company => [company.name, company])),
+      addressMap: new Map(state.receivedDataReducer.addressList.map(address => [`${address.street} , ${address.houseNumber} , ${address.zipCode}`, address])),
+      officeList: Array.from(state.receivedDataReducer.officeList, office => {
+        return{
+          id: office.id,
+          name: office.name,
+          company: state.receivedDataReducer.companyList.filter(company => company.id === office.company_id)[0].name,
+          address: `${office.address.street} , ${office.address.houseNumber} , ${office.address.zipCode}`,
+        }}
+      ),
+    }
+  ),
+  dispatch => ({
+    updateMenu: (focused) => {
+      dispatch(updateMenu(focused));
+    }, receivedOfficeList: (list) => {
+      dispatch(receivedList(list, OFFICE_API_ID));
+    },
+    receivedAddressList: (list) => {
+      dispatch(receivedList(list, ADDRESS_API_ID));
+    },
+    receivedCompanyList: (list) => {
+      dispatch(receivedList(list, COMPANY_API_ID));
+    },
+  })
+)(OfficeTable);
