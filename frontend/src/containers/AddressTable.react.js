@@ -13,24 +13,19 @@ const cellEditProp = {
   blurToSave: true
 };
 
-const OBJECT_TYPE = 'address';
 
 
-export default class AddressTable extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      addressList: []
-    };
+class AddressTable extends React.Component {
 
-  }
+  api = getBindedApi(ADDRESS_API_ID, this.props.receivedAddressList);
 
   componentDidMount() {
-    getData(OBJECT_TYPE, this.setStateHandler);
+    this.props.updateMenu(ADDRESSES_MENU_ITEM.text);
+    this.api.getData();
   }
 
   onAddRow = (row) => {
-    onAdd(OBJECT_TYPE, this.setStateHandler, {
+    this.api.onAdd( {
       houseNumber: row.houseNumber,
       street: row.street,
       zipCode: row.zipCode
@@ -39,7 +34,7 @@ export default class AddressTable extends React.Component {
   };
 
   onDeleteRow = (row) => {
-    onDelete(OBJECT_TYPE, this.setStateHandler, row);
+    this.api.onDelete( row);
 
   };
 
@@ -48,7 +43,7 @@ export default class AddressTable extends React.Component {
     const targetRow = addressList.find(prod => prod.id === row.id);
     if (targetRow) {
       targetRow[fieldName] = value;
-      onUpdate(OBJECT_TYPE, this.setStateHandler, targetRow);
+      this.api.onUpdate( targetRow);
     }
   };
 
@@ -59,7 +54,7 @@ export default class AddressTable extends React.Component {
     const btnGroup = props => <TableButtonGroup exportCSVBtn={props.exportCSVBtn}
                                                 insertBtn={props.insertBtn}
                                                 deleteBtn={props.deleteBtn}
-                                                onCSVFileLoaded={data => data.forEach(obj => onAdd(OBJECT_TYPE, this.setStateHandler, obj))}/>;
+                                                onCSVFileLoaded={data => data.forEach(obj => this.api.onAdd( obj))}/>;
 
 
     const options = {
@@ -68,7 +63,7 @@ export default class AddressTable extends React.Component {
       onCellEdit: this.onCellEdit,
       btnGroup,
     };
-
+console.log(this.props);
     return (
       <div >
         <BootstrapTable data={this.props.addressList}
@@ -89,3 +84,17 @@ export default class AddressTable extends React.Component {
     );
   }
 }
+
+export default connect(
+        state => ({
+          addressList: state.receivedDataReducer.addressList,
+        }),
+    dispatch => ({
+      updateMenu:(focused) => {
+        dispatch(updateMenu(focused));
+      },
+      receivedAddressList: (list) => {
+        dispatch(receivedList(list, ADDRESS_API_ID));
+      },
+    })
+)(AddressTable);

@@ -6,8 +6,11 @@ export const updateMenu = (focused) => ({
 });
 
 
-export const receivedList = (response, apiId) => ({
+export const receivedList = (response, apiId) => {
+  console.log('receivedList');
+  console.log(response);
+  return {
   type: RECEIVED_LIST,
   response,
   apiId,
-});
+}};
