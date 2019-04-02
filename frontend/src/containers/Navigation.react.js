@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import Menu from "./Menu.react";
+import {MENU_ITEMS} from "../constants/menuItems";
 
 
 export default class Navigation extends Component {
@@ -8,12 +9,7 @@ export default class Navigation extends Component {
     return (
       <div className='nav-menu' >
 
-        <Menu items={[
-          {text: 'Home', link: '/'},
-          {text: 'Companies', link: '/companies'},
-          {text: 'Addresses', link: '/addresses'},
-          {text: 'Offices', link: '/offices'},
-        ]} />
+        <Menu items={MENU_ITEMS} />
 
       </div >
     );
